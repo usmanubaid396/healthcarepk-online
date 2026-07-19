@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep corporate blues
+        // Deep corporate blues (kept for back-compat with existing tokens)
         navy: {
           50: '#eef2fb',
           100: '#d4dded',
@@ -18,7 +18,7 @@ export default {
           900: '#06102c',
           950: '#03091b',
         },
-        // Accent — muted clinical cyan
+        // Accent — muted clinical cyan (kept for back-compat)
         accent: {
           50: '#ecfdff',
           100: '#cff7fe',
@@ -47,12 +47,12 @@ export default {
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.6s ease-out both',
+        'fade-up': 'fade-up 0.8s cubic-bezier(0.22,1,0.36,1) both',
         shimmer: 'shimmer 6s linear infinite',
       },
       backgroundImage: {
         'grid-faint':
-          'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+          'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) px, transparent 1px)',
       },
       backgroundSize: {
         grid: '48px 48px',
