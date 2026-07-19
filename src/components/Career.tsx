@@ -31,7 +31,7 @@ export default function Career() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <a
-                  href="mailto:careers@hplbd.com"
+                  href="mailto:careers@healthcarepk.online"
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-navy-900 transition-all hover:bg-accent-50"
                 >
                   View Open Roles

@@ -182,19 +182,19 @@ export const CONTACTS = {
     title: 'Head Office',
     lines: ['House 12, Road 7, Gulshan-1', 'Dhaka 1212, Bangladesh'],
     phone: '+880 2 9870 1234',
-    email: 'info@hplbd.com',
+    email: 'info@healthcarepk.online',
   },
   plant: {
     title: 'Manufacturing Plant',
     lines: ['Dhamair Char, Narayanganj', 'Industrial Zone, Bangladesh'],
     phone: '+880 2 7654 3210',
-    email: 'plant@hplbd.com',
+    email: 'plant@healthcarepk.online',
   },
   usContact: {
     title: 'U.S. Contact',
     lines: ['450 Technology Square, Suite 300', 'Cambridge, MA 02139, USA'],
     phone: '+1 (617) 555 0142',
-    email: 'usa@hplbd.com',
+    email: 'usa@healthcarepk.online',
   },
 };
 
