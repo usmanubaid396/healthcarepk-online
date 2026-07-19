@@ -56,97 +56,34 @@ export type Product = {
   id: string;
   name: string;
   category: string;
-  form: string;
-  strength: string;
-  description: string;
+  form?: string;
+  strength?: string;
+  description?: string;
   tag?: 'flagship' | 'new';
 };
 
 export const PRODUCTS: Product[] = [
-  {
-    id: 'felitan',
-    name: 'Felitan',
-    category: 'Cardiovascular',
-    form: 'Tablet',
-    strength: '50 mg',
-    description:
-      'A trusted cardiovascular therapy supporting stable cardiac function in adult patients.',
-    tag: 'flagship',
-  },
-  {
-    id: 'cisplat',
-    name: 'Cisplat',
-    category: 'Oncology',
-    form: 'Injection',
-    strength: '50 mg/50 ml',
-    description:
-      'Platinum-based oncology infusion used in established chemotherapy regimens.',
-    tag: 'flagship',
-  },
-  {
-    id: 'lyric',
-    name: 'Lyric',
-    category: 'Neurology',
-    form: 'Capsule',
-    strength: '75 mg',
-    description:
-      'Neuropathic pain management capsule with proven tolerability profile.',
-    tag: 'flagship',
-  },
-  {
-    id: 'syndol',
-    name: 'Syndol',
-    category: 'Analgesic',
-    form: 'Tablet',
-    strength: '500 mg',
-    description:
-      'Combination analgesic for moderate pain relief with muscle relaxant support.',
-    tag: 'flagship',
-  },
-  {
-    id: 'amlovas',
-    name: 'Amlovas',
-    category: 'Cardiovascular',
-    form: 'Tablet',
-    strength: '5 mg',
-    description: 'Calcium channel blocker for hypertension and angina management.',
-  },
-  {
-    id: 'cef-3',
-    name: 'Cef-3',
-    category: 'Antibiotic',
-    form: 'Capsule',
-    strength: '300 mg',
-    description: 'Third-generation cephalosporin for broad-spectrum bacterial infections.',
-    tag: 'new',
-  },
-  {
-    id: 'omastat',
-    name: 'Omastat',
-    category: 'Gastro',
-    form: 'Capsule',
-    strength: '20 mg',
-    description: 'Proton-pump inhibitor for acid-related gastrointestinal disorders.',
-  },
-  {
-    id: 'gluconorm',
-    name: 'Gluconorm',
-    category: 'Endocrine',
-    form: 'Tablet',
-    strength: '500 mg',
-    description: 'Oral antidiabetic for type-2 diabetes mellitus management.',
-  },
+  { id: 'practel', name: 'PRACTEL', category: 'Pyrexic' },
+  { id: 'ibuen', name: 'IBUEN', category: 'Analgesic' },
+  { id: 'ashdol', name: 'ASHDOL', category: 'Analgesic' },
+  { id: 'opa', name: 'OPA', category: 'Gastrointestinal' },
+  { id: 'alodox', name: 'ALODOX', category: 'Antibiotic' },
+  { id: 'ayacin', name: 'AYACIN', category: 'Antibiotic' },
+  { id: 'azin', name: 'AZIN', category: 'Anti-allergic' },
+  { id: 'ignocar', name: 'IGNOCAR', category: 'Topical' },
+  { id: 'silvacar', name: 'SILVACAR', category: 'Topical' },
+  { id: 'alafin', name: 'ALAFIN', category: 'Topical' },
+  { id: 'p-don', name: 'P-DON', category: 'Topical' },
 ];
 
 export const PRODUCT_CATEGORIES = [
   'All',
-  'Cardiovascular',
-  'Oncology',
-  'Neurology',
+  'Pyrexic',
   'Analgesic',
+  'Gastrointestinal',
   'Antibiotic',
-  'Gastro',
-  'Endocrine',
+  'Anti-allergic',
+  'Topical',
 ] as const;
 
 export type Leader = {

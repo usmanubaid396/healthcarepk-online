@@ -2,16 +2,15 @@
  * ProductShowcase — Enterprise 3D-interactive product gallery.
  *
  * Architecture (all self-contained in this file):
- *   - PerspectiveCard   : 3D perspective container (preserve-3d) wrapping content
- *   - ProductCard       : Glassmorphic card with mouse-following tilt + light sheen
- *   - OrbitalHub        : Central 3D hub around which featured cards orbit (desktop)
- *   - ProductGrid       : Responsive grid / orbit layout orchestrator
+ *   - PerspectiveCard : 3D perspective container (preserve-3d) wrapping content
+ *   - ProductCard     : Glassmorphic card with mouse-following tilt + light sheen
+ *   - ProductGrid     : Responsive mobile-first grid orchestrator
  *
  * Performance:
- *   - useReducedMotion disables tilt + orbital spin on accessibility request
+ *   - useReducedMotion disables tilt + hover pop on accessibility request
  *   - will-change: transform, opacity on every interactive layer
- *   - rAF-throttled pointer tracking prevents layout thrash
- *   - Mobile: vertical stack with simplified entrance (no 3D / orbit)
+ *   - Spring-smoothed pointer tracking prevents layout thrash
+ *   - Mobile: vertical stack with simplified entrance (no 3D tilt)
  *
  * Only dependencies: framer-motion + lucide-react.
  */
@@ -38,8 +37,6 @@ import {
   Tag,
   ArrowUpRight,
   PackageX,
-  Sparkles,
-  Orbit,
   Pill,
   type LucideIcon,
 } from 'lucide-react';
@@ -49,23 +46,14 @@ import { PRODUCTS, PRODUCT_CATEGORIES, type Product } from '../data/site';
 /*  Constants & helpers                                               */
 /* ------------------------------------------------------------------ */
 
-const TAG_STYLES: Record<NonNullable<Product['tag']>, string> = {
-  flagship: 'bg-accent-400/20 text-accent-200 ring-accent-300/40',
-  new: 'bg-emerald-400/20 text-emerald-200 ring-emerald-300/40',
-};
-
 const CATEGORY_ICON: Record<string, LucideIcon> = {
-  Cardiovascular: Pill,
-  Oncology: Sparkles,
-  Neurology: Sparkles,
+  Pyrexic: Pill,
   Analgesic: Pill,
+  Gastrointestinal: Pill,
   Antibiotic: Pill,
-  Gastro: Pill,
-  Endocrine: Pill,
+  'Anti-allergic': Pill,
+  Topical: Pill,
 };
-
-/** Number of products pulled into the desktop orbital ring. */
-const ORBIT_COUNT = 6;
 
 /* ------------------------------------------------------------------ */
 /*  PerspectiveCard                                                   */
@@ -157,11 +145,11 @@ function ProductCard({ product, index, reducedMotion }: ProductCardProps) {
   }, [px, py]);
 
   const CatIcon = CATEGORY_ICON[product.category] ?? Pill;
-  const TagIcon = TAG_STYLES[product.tag ?? 'flagship'] ? Sparkles : null;
 
-  // Static motion style when reduced motion is requested.
+  // Static style when reduced motion is requested; otherwise full 3D tilt
+  // plus a whileHover "pop out of screen" via z-translate.
   const cardStyle: MotionStyle = reducedMotion
-    ? {}
+    ? { transformStyle: 'preserve-3d', willChange: 'transform, opacity' }
     : {
         rotateX,
         rotateY,
@@ -170,6 +158,10 @@ function ProductCard({ product, index, reducedMotion }: ProductCardProps) {
         willChange: 'transform, opacity',
       };
 
+  const hoverPop = reducedMotion
+    ? undefined
+    : { z: 30, rotateX: 10, rotateY: 10 };
+
   return (
     <PerspectiveCard perspective={1000} className="h-full">
       <motion.article
@@ -177,11 +169,12 @@ function ProductCard({ product, index, reducedMotion }: ProductCardProps) {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5, delay: index * 0.06, ease: 'easeOut' as const }}
+        whileHover={hoverPop}
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
         style={cardStyle}
         className="group relative flex h-full flex-col overflow-hidden rounded-3xl
-                   bg-white/5 backdrop-blur-2xl border border-white/10
+                   bg-white/5 backdrop-blur-xl border border-white/10
                    p-6 text-white
                    [font-smooth:antialiased] [-webkit-font-smoothing:antialiased]
                    transition-[background,box-shadow] duration-300
@@ -214,40 +207,48 @@ function ProductCard({ product, index, reducedMotion }: ProductCardProps) {
         />
 
         {/* Header row */}
-        <div className="relative z-10 flex items-start justify-between gap-3" style={{ transform: 'translateZ(40px)' }}>
+        <div
+          className="relative z-10 flex items-start justify-between gap-3"
+          style={{ transform: 'translateZ(40px)' }}
+        >
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white ring-1 ring-white/15 backdrop-blur-sm">
             <CatIcon className="h-5 w-5 text-accent-200" />
           </div>
-          {product.tag && (
-            <span
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ring-1 ${TAG_STYLES[product.tag]}`}
-            >
-              {TagIcon && <TagIcon className="h-3 w-3" />}
-              {product.tag}
-            </span>
-          )}
+          <span className="rounded-full bg-accent-400/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-accent-200 ring-1 ring-accent-300/30">
+            Registered
+          </span>
         </div>
 
         {/* Body */}
-        <div className="relative z-10 mt-5 flex flex-1 flex-col" style={{ transform: 'translateZ(30px)' }}>
-          <h3 className="font-display text-xl font-bold tracking-tight text-white">{product.name}</h3>
+        <div
+          className="relative z-10 mt-5 flex flex-1 flex-col"
+          style={{ transform: 'translateZ(30px)' }}
+        >
+          <h3 className="font-display text-xl font-bold tracking-tight text-white">
+            {product.name}
+          </h3>
           <p className="text-sm font-medium text-accent-300">{product.category}</p>
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{product.description}</p>
 
-          <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-4 text-xs">
-            <div>
-              <dt className="text-white/40">Form</dt>
-              <dd className="mt-0.5 font-semibold text-white/90">{product.form}</dd>
-            </div>
-            <div>
-              <dt className="text-white/40">Strength</dt>
-              <dd className="mt-0.5 font-semibold text-white/90">{product.strength}</dd>
-            </div>
-          </dl>
+          {(product.form || product.strength) && (
+            <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-4 text-xs">
+              <div>
+                <dt className="text-white/40">Form</dt>
+                <dd className="mt-0.5 font-semibold text-white/90">
+                  {product.form ?? '—'}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-white/40">Strength</dt>
+                <dd className="mt-0.5 font-semibold text-white/90">
+                  {product.strength ?? '—'}
+                </dd>
+              </div>
+            </dl>
+          )}
 
           <a
             href="#products"
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-accent-200"
+            className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-white transition-colors hover:text-accent-200"
           >
             View details
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -259,124 +260,8 @@ function ProductCard({ product, index, reducedMotion }: ProductCardProps) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  OrbitalHub                                                        */
-/*  Central 3D hub with a rotating ring of featured product chips.    */
-/* ------------------------------------------------------------------ */
-
-type OrbitalHubProps = {
-  featured: Product[];
-  reducedMotion: boolean;
-};
-
-function OrbitalHub({ featured, reducedMotion }: OrbitalHubProps) {
-  // Counter-rotation keeps each chip upright as the ring spins.
-  const spin = useMotionValue(0);
-  const counterRotate = useTransform(spin, (v) => `${-v}deg`);
-
-  return (
-    <PerspectiveCard perspective={1200} className="relative hidden lg:block">
-      <motion.div
-        className="relative mx-auto h-[440px] w-[440px]"
-        style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
-        // Animate the rotation value; the transforms below derive from it.
-        animate={reducedMotion ? {} : { rotate: 360 }}
-        transition={reducedMotion ? {} : { repeat: Infinity, duration: 40, ease: 'linear' }}
-      >
-        {/* Core glow */}
-        <motion.div
-          className="absolute inset-0 m-auto h-40 w-40 rounded-full bg-gradient-to-br from-accent-400/40 to-navy-600/40 blur-2xl"
-          style={{ transform: 'translateZ(-40px)' }}
-        />
-
-        {/* Core hub */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' as const }}
-          className="absolute inset-0 m-auto flex h-32 w-32 flex-col items-center justify-center rounded-full
-                     bg-white/5 backdrop-blur-2xl border border-white/15 text-white
-                     shadow-2xl shadow-navy-900/40"
-          style={{ transform: 'translateZ(60px)', willChange: 'transform, opacity' }}
-        >
-          <Orbit className="h-7 w-7 text-accent-200" />
-          <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
-            Portfolio
-          </span>
-          <span className="font-display text-2xl font-extrabold">{featured.length}</span>
-        </motion.div>
-
-        {/* Orbital ring of chips */}
-        <motion.div
-          className="absolute inset-0"
-          // Drive the spin directly via animate; onUpdate mirrors it into a
-          // motion value so child chips can counter-rotate and stay upright.
-          initial={false}
-          animate={reducedMotion ? { rotate: 0 } : { rotate: 360 }}
-          transition={
-            reducedMotion
-              ? { duration: 0 }
-              : { repeat: Infinity, duration: 40, ease: 'linear' }
-          }
-          onUpdate={(latest) => {
-            const r = (latest as { rotate?: number }).rotate;
-            if (typeof r === 'number') spin.set(r);
-          }}
-          style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
-        >
-          {featured.map((p, i) => {
-            const angle = (i / featured.length) * Math.PI * 2;
-            const radius = 200;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            return (
-              <motion.div
-                key={p.id}
-                className="absolute left-1/2 top-1/2 -ml-28 -mt-9 w-56"
-                style={{
-                  x,
-                  y,
-                  rotate: counterRotate, // keep chips upright as ring spins
-                  transformStyle: 'preserve-3d',
-                  willChange: 'transform',
-                }}
-              >
-                <div
-                  className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 px-4 py-3
-                             text-white shadow-xl shadow-navy-900/30 [font-smooth:antialiased]"
-                  style={{ transform: 'translateZ(30px)' }}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-400/20 text-accent-200">
-                      {p.name.charAt(0)}
-                    </span>
-                    <div>
-                      <div className="text-sm font-bold leading-tight">{p.name}</div>
-                      <div className="text-[10px] uppercase tracking-wider text-white/50">
-                        {p.category}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Faint orbital path ring */}
-        <div
-          aria-hidden
-          className="absolute inset-0 m-auto h-[400px] w-[400px] rounded-full border border-white/[0.06]"
-          style={{ transform: 'translateZ(-10px)' }}
-        />
-      </motion.div>
-    </PerspectiveCard>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  ProductGrid                                                       */
-/*  Mobile: vertical stack. Desktop: orbit hub + grid of cards.       */
+/*  Mobile-first: 1 → 2 → 4 columns.                                  */
 /* ------------------------------------------------------------------ */
 
 type ProductGridProps = {
@@ -385,38 +270,11 @@ type ProductGridProps = {
 };
 
 function ProductGrid({ products, reducedMotion }: ProductGridProps) {
-  // Desktop: first ORBIT_COUNT featured products orbit; rest render in grid.
-  const featured = useMemo(() => products.slice(0, ORBIT_COUNT), [products]);
-  const gridProducts = useMemo(
-    () => (products.length > ORBIT_COUNT ? products.slice(ORBIT_COUNT) : products),
-    [products],
-  );
-
   return (
-    <div className="mt-10">
-      {/* Mobile / tablet: simple responsive stack with simplified entrance. */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:hidden">
-        {products.map((p, i) => (
-          <ProductCard key={p.id} product={p} index={i} reducedMotion={reducedMotion} />
-        ))}
-      </div>
-
-      {/* Desktop: orbital hub + surrounding grid. */}
-      <div className="hidden lg:block">
-        <div className="grid grid-cols-[1fr_1.2fr] gap-12">
-          {/* Left: orbit */}
-          <div className="flex items-center">
-            <OrbitalHub featured={featured} reducedMotion={reducedMotion} />
-          </div>
-
-          {/* Right: card grid */}
-          <div className="grid grid-cols-2 gap-5 xl:grid-cols-2">
-            {gridProducts.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} reducedMotion={reducedMotion} />
-            ))}
-          </div>
-        </div>
-      </div>
+    <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {products.map((p, i) => (
+        <ProductCard key={p.id} product={p} index={i} reducedMotion={reducedMotion} />
+      ))}
     </div>
   );
 }
@@ -437,8 +295,7 @@ export default function ProductShowcase() {
       const matchesQuery =
         !q ||
         p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q);
+        p.category.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
   }, [query, category]);
@@ -449,9 +306,18 @@ export default function ProductShowcase() {
       className="relative overflow-hidden bg-navy-950 py-24 lg:py-32 [font-smooth:antialiased]"
     >
       {/* Ambient backdrop glows */}
-      <div aria-hidden className="pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-accent-600/15 blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute -right-32 bottom-1/4 h-96 w-96 rounded-full bg-navy-600/30 blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.04]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-accent-600/15 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-32 bottom-1/4 h-96 w-96 rounded-full bg-navy-600/30 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.04]"
+      />
 
       <div className="container-tight relative">
         {/* Heading + search */}
@@ -464,7 +330,7 @@ export default function ProductShowcase() {
               Browse our registered medicines
             </h2>
             <p className="mt-3 max-w-xl text-white/60">
-              Search by name, category, or therapeutic area. Every product is
+              Search by name or therapeutic category. Every product is
               manufactured under GMP and registered for export.
             </p>
           </div>
@@ -481,7 +347,7 @@ export default function ProductShowcase() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search medicines, e.g. Felitan, Cisplat…"
+                placeholder="Search medicines, e.g. PRACTEL, ALODOX…"
                 className="w-full rounded-full border border-white/10 bg-white/5 py-3.5 pl-12 pr-4
                            text-sm text-white placeholder:text-white/40 backdrop-blur-md outline-none
                            transition focus:border-accent-400/60 focus:ring-2 focus:ring-accent-400/20"
@@ -520,7 +386,7 @@ export default function ProductShowcase() {
           {PRODUCTS.length} products
         </p>
 
-        {/* Grid / orbit */}
+        {/* Grid */}
         {filtered.length > 0 ? (
           <AnimatePresence mode="wait">
             <motion.div
