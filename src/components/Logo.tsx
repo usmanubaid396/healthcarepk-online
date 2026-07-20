@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Hexagon } from 'lucide-react';
 import { transition } from '../lib/motion';
+
+const LOGO_SRC = '/Gemini_Generated_Image_3cdfrk3cdfrk3cdf.png';
 
 type LogoProps = { variant?: 'light' | 'default'; className?: string };
 
@@ -14,8 +15,13 @@ export default function Logo({ variant = 'light', className = '' }: LogoProps) {
       className={`group inline-flex items-center gap-2.5 ${className}`}
       aria-label="Healthcare Pharmaceuticals Pakistan — home"
     >
-      <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-bioteal-600 text-obsidian shadow-[0_8px_24px_rgba(6,182,212,0.4)] will-change-transform">
-        <Hexagon className="h-5 w-5" strokeWidth={2.5} />
+      <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400/20 to-bioteal-600/20 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(6,182,212,0.25)] will-change-transform">
+        <img
+          src={LOGO_SRC}
+          alt="Healthcare Pharmaceuticals Pakistan logo"
+          className="h-full w-full object-contain p-1"
+          loading="eager"
+        />
       </span>
       <span className="flex flex-col leading-none">
         <span
