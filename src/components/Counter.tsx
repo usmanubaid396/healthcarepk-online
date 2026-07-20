@@ -8,9 +8,12 @@ type CounterProps = {
   className?: string;
 };
 
-// Counts from 0 → value when scrolled into view. Renders a static number
-// until triggered so it never flashes 0 on slow devices.
-export default function Counter({ value, suffix = '', duration = 1800, className = '' }: CounterProps) {
+export default function Counter({
+  value,
+  suffix = '',
+  duration = 1800,
+  className = '',
+}: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [display, setDisplay] = useState(value);
@@ -22,7 +25,6 @@ export default function Counter({ value, suffix = '', duration = 1800, className
     const tick = (now: number) => {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // easeOutExpo for a satisfying deceleration
       const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setDisplay(Math.round(eased * value));
       if (progress < 1) raf = requestAnimationFrame(tick);

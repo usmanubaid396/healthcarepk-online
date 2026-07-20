@@ -26,57 +26,57 @@ export default function Header() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={transition}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-slate-950/60 backdrop-blur-2xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-          : 'bg-transparent'
-      }`}
+      className="fixed inset-x-0 top-0 z-50 px-4 pt-4"
     >
-      <div className="container-tight flex h-20 items-center justify-between gap-4">
-        <Logo variant="light" />
+      <div
+        className={`container-tight flex h-16 items-center justify-between gap-4 rounded-full border px-5 transition-all duration-500 ${
+          scrolled
+            ? 'bg-slate-900/60 border-white/10 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.4)]'
+            : 'bg-slate-900/30 border-white/10 backdrop-blur-xl'
+        }`}
+      >
+        <Logo />
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1 rounded-full border border-white/10 bg-slate-900/40 px-2 py-1.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+        <nav className="hidden lg:flex items-center gap-1">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative px-4 py-2 text-sm font-medium rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+              className="relative px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white"
             >
-              {link.label}
+              <span className="relative z-10">{link.label}</span>
+              <span className="absolute inset-0 scale-90 rounded-full bg-white/10 opacity-0 transition-all duration-300 hover:opacity-100" />
             </a>
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex">
           <motion.a
-            href="#career"
+            href="#contact"
             whileHover={{ scale: 1.05 }}
             transition={transition}
             style={{ transformStyle: 'preserve-3d' }}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition will-change-transform hover:bg-teal-50"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-bioteal-600 px-5 py-2.5 text-sm font-semibold text-obsidian shadow-[0_8px_32px_rgba(6,182,212,0.45)] will-change-transform hover:shadow-[0_12px_44px_rgba(6,182,212,0.6)]"
           >
             <Phone className="h-4 w-4" />
-            Contact Us
+            Contact Sales
           </motion.a>
         </div>
 
-        {/* Mobile toggle */}
         <button
           type="button"
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden inline-flex items-center justify-center rounded-full border border-white/10 bg-slate-900/40 p-2.5 text-white backdrop-blur-2xl transition hover:bg-white/10"
+          className="lg:hidden inline-flex items-center justify-center rounded-full border border-white/10 bg-slate-900/40 p-2.5 text-white transition hover:bg-white/10"
           aria-label="Open menu"
         >
           <Menu className="h-5 w-5" />
         </button>
       </div>
 
-      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-2xl"
+            className="lg:hidden fixed inset-0 z-50 bg-obsidian/70 backdrop-blur-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -84,15 +84,15 @@ export default function Header() {
             onClick={() => setMobileOpen(false)}
           >
             <motion.div
-              className="absolute right-0 top-0 h-full w-[82%] max-w-sm bg-slate-900/80 backdrop-blur-2xl border-l border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex flex-col"
+              className="absolute right-0 top-0 h-full w-[82%] max-w-sm glass flex flex-col rounded-none rounded-l-3xl"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={transition}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-5 h-20 border-b border-white/10">
-                <Logo variant="light" />
+              <div className="flex items-center justify-between px-5 h-16 border-b border-white/10">
+                <Logo />
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
@@ -114,12 +114,12 @@ export default function Header() {
                   </a>
                 ))}
                 <a
-                  href="#career"
+                  href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-teal-50"
+                  className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-bioteal-600 px-5 py-3 text-sm font-semibold text-obsidian"
                 >
                   <Phone className="h-4 w-4" />
-                  Contact Us
+                  Contact Sales
                 </a>
               </nav>
             </motion.div>

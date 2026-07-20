@@ -1,112 +1,166 @@
-import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Globe2 } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
+import { useCallback, type PointerEvent as ReactPointerEvent } from 'react';
+import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
-import { blurReveal, staggerContainer, transition, viewportOnce } from '../lib/motion';
+import GlassButton from './ui/GlassButton';
+import { blurReveal, staggerContainer } from '../lib/motion';
 
-const HERO_IMG =
-  'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1920';
+/* Three floating glass-morphic spheres at different depths */
+const SPHERES = [
+  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
+  { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
+  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', z: 25, delay: 0.6 },
+];
+
+function FloatingSphere({
+  size,
+  pos,
+  z,
+  delay,
+  reduced,
+}: {
+  size: string;
+  pos: string;
+  z: number;
+  delay: number;
+  reduced: boolean | null;
+}) {
+  return (
+    <motion.div
+      aria-hidden
+      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/10 to-cyan-400/10 backdrop-blur-2xl border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
+      style={{ zIndex: z, willChange: 'transform' }}
+      animate={
+        reduced
+          ? undefined
+          : {
+              scale: [1, 1.08, 1],
+              rotate: [0, 18, 0],
+              y: [0, -16, 0],
+            }
+      }
+      transition={
+        reduced
+          ? undefined
+          : { duration: 10, repeat: Infinity, ease: 'easeInOut', delay }
+      }
+    >
+      <div className={`${size} rounded-full opacity-60`} />
+    </motion.div>
+  );
+}
 
 export default function Hero() {
+  const reduced = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(my, { stiffness: 50, damping: 20 });
+  const ry = useSpring(mx, { stiffness: 50, damping: 20 });
+
+  const onPointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLDivElement>) => {
+      if (reduced) return;
+      const r = e.currentTarget.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      mx.set(py * 6);
+      my.set(px * -6);
+    },
+    [mx, my, reduced],
+  );
+
+  const onPointerLeave = useCallback(() => {
+    mx.set(0);
+    my.set(0);
+  }, [mx, my]);
+
   return (
-    <section id="home" className="relative isolate overflow-hidden bg-slate-950">
-      {/* Background image + gradient overlay */}
-      <div className="absolute inset-0 -z-10">
-        <img
-          src={HERO_IMG}
-          alt="Pharmaceutical research laboratory"
-          className="h-full w-full object-cover object-center"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-teal-950/40" />
+    <section
+      id="home"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian"
+    >
+      {/* Living background — slow-drifting bio-teal orb */}
+      <AmbientGlow
+        colorClass="bg-teal-500/15"
+        positionClass="absolute left-1/2 top-1/3"
+        sizeClass="h-[620px] w-[620px] -translate-x-1/2"
+        blur="blur-[160px]"
+      />
+      <AmbientGlow
+        colorClass="bg-cyan-500/10"
+        positionClass="absolute -right-32 bottom-0"
+        sizeClass="h-[480px] w-[480px]"
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
+
+      {/* Floating 3D glass spheres (desktop only for 60fps mobile) */}
+      <div className="hidden sm:block">
+        {SPHERES.map((s, i) => (
+          <FloatingSphere key={i} {...s} reduced={reduced} />
+        ))}
       </div>
 
-      {/* Cinematic ambient glows */}
-      <AmbientGlow colorClass="bg-teal-500/10" positionClass="absolute -left-32 top-1/4" />
-      <AmbientGlow colorClass="bg-teal-400/5" positionClass="absolute -right-40 bottom-0" sizeClass="h-[600px] w-[600px]" />
-
-      <PerspectiveStage perspective={1000} className="relative">
-        <div className="container-tight relative flex min-h-[92vh] items-center pt-28 pb-20">
+      <PerspectiveStage perspective={1000} className="relative z-10 h-full">
+        <motion.div
+          onPointerMove={onPointerMove}
+          onPointerLeave={onPointerLeave}
+          style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d', willChange: 'transform' }}
+          className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center"
+        >
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="show"
-            className="max-w-3xl"
+            className="max-w-4xl"
           >
             <motion.span
               variants={blurReveal}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-900/40 backdrop-blur-2xl px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-teal-200 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+              className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200"
             >
               <ShieldCheck className="h-4 w-4" />
-              Trusted Pharmaceutical Manufacturer
+              WHO-GMP · ISO 9001:2015 · cGMP Compliant
             </motion.span>
 
-            <motion.h1
-              variants={blurReveal}
-              className="mt-6 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl"
-            >
-              Making the
-              <span className="block bg-gradient-to-r from-teal-300 via-teal-200 to-white bg-clip-text text-transparent">
-                World Healthier
-              </span>
-            </motion.h1>
+            <PerspectiveStage perspective={1000} className="mt-7">
+              <motion.h1
+                variants={blurReveal}
+                style={{ transformStyle: 'preserve-3d' }}
+                className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-7xl lg:text-8xl"
+              >
+                Making the
+                <span className="block bg-gradient-to-br from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
+                  World Healthier
+                </span>
+              </motion.h1>
+            </PerspectiveStage>
 
             <motion.p
               variants={blurReveal}
-              className="mt-6 max-w-xl text-lg leading-relaxed text-slate-200/80"
+              className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-slate-200/80 sm:text-xl"
             >
-              Healthcare Pharmaceuticals Pakistan is a professional manufacturer and
-              supplier of registered medicines — delivering quality, accessible therapies
-              trusted across 32+ countries.
+              Healthcare Pharmaceuticals Pakistan is a WHO-GMP, ISO 9001:2015, and cGMP
+              compliant manufacturer of registered medicines — delivering quality,
+              accessible therapies trusted worldwide.
             </motion.p>
 
             <motion.div
               variants={blurReveal}
-              className="mt-9 flex flex-col gap-4 sm:flex-row"
+              className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
             >
-              <motion.a
-                href="#products"
-                variants={blurReveal}
-                whileHover={{ rotateX: 10, rotateY: 10, scale: 1.05, z: 30 }}
-                transition={transition}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 shadow-[0_8px_32px_rgba(0,0,0,0.3)] will-change-transform"
-              >
+              <GlassButton href="#products" variant="primary">
                 Explore Our Products
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </motion.a>
-              <motion.a
-                href="#global-operation"
-                variants={blurReveal}
-                whileHover={{ rotateX: 10, rotateY: 10, scale: 1.05, z: 30 }}
-                transition={transition}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-slate-900/40 backdrop-blur-xl px-7 py-3.5 text-sm font-semibold text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] will-change-transform"
-              >
-                <Globe2 className="h-4 w-4" />
-                Global Operations
-              </motion.a>
-            </motion.div>
-
-            {/* Trust strip */}
-            <motion.div
-              variants={blurReveal}
-              viewport={viewportOnce}
-              className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-slate-200/70"
-            >
-              {['WHO-GMP Certified', 'ISO 9001:2015', 'GDMP Compliant'].map((t) => (
-                <span key={t} className="inline-flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-teal-400" />
-                  {t}
-                </span>
-              ))}
+              </GlassButton>
+              <GlassButton href="#contact" variant="secondary">
+                <FlaskConical className="h-4 w-4" />
+                Contact Sales
+              </GlassButton>
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </PerspectiveStage>
 
-      {/* Bottom fade into next section */}
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-obsidian to-transparent" />
     </section>
   );
 }

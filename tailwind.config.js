@@ -4,32 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep corporate blues (kept for back-compat with existing tokens)
-        navy: {
-          50: '#eef2fb',
-          100: '#d4dded',
-          200: '#a8bcd9',
-          300: '#6e8bbf',
-          400: '#3f63a3',
-          500: '#1f4486',
-          600: '#16316b',
-          700: '#0f2350',
-          800: '#0a1840',
-          900: '#06102c',
-          950: '#03091b',
-        },
-        // Accent — muted clinical cyan (kept for back-compat)
-        accent: {
-          50: '#ecfdff',
-          100: '#cff7fe',
-          200: '#9eeffb',
-          300: '#5ce3f8',
-          400: '#22d3ee',
-          500: '#06b6d4',
-          600: '#0891b2',
-          700: '#0e7490',
-          800: '#155e75',
-          900: '#164e63',
+        obsidian: '#030712',
+        darkslate: '#0B132B',
+        bioteal: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
         },
       },
       fontFamily: {
@@ -37,25 +24,30 @@ export default {
         display: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
       },
       keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(24px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        'orbit-rotate': {
+          from: { transform: 'rotateY(0deg)' },
+          to: { transform: 'rotateY(360deg)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
+        'pulse-aura': {
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.7', transform: 'scale(1.05)' },
+        },
       },
       animation: {
-        'fade-up': 'fade-up 0.8s cubic-bezier(0.22,1,0.36,1) both',
+        'orbit-rotate': 'orbit-rotate 90s linear infinite',
         shimmer: 'shimmer 6s linear infinite',
+        'pulse-aura': 'pulse-aura 8s ease-in-out infinite',
       },
       backgroundImage: {
         'grid-faint':
-          'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) px, transparent 1px)',
+          'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)',
       },
       backgroundSize: {
-        grid: '48px 48px',
+        grid: '56px 56px',
       },
     },
   },
