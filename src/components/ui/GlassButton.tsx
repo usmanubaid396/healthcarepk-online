@@ -11,6 +11,7 @@ type GlassButtonProps = {
   href: string;
   variant?: 'primary' | 'secondary';
   className?: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 };
 
 export default function GlassButton({
@@ -18,6 +19,7 @@ export default function GlassButton({
   href,
   variant = 'primary',
   className = '',
+  onClick,
 }: GlassButtonProps) {
   const reduced = useReducedMotion();
 
@@ -32,6 +34,7 @@ export default function GlassButton({
   return (
     <motion.a
       href={href}
+      onClick={onClick}
       whileHover={reduced ? { scale: 1.02 } : { scale: 1.05, z: 30 }}
       whileTap={{ scale: 0.97 }}
       transition={transition}

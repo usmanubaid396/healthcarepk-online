@@ -29,7 +29,7 @@ export default function Logo({ variant = 'light', className = '' }: LogoProps) {
             variant === 'light' ? 'text-white' : 'text-obsidian'
           }`}
         >
-          Healthcare PK
+          Healthcare
         </span>
         <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-300">
           Pharmaceuticals

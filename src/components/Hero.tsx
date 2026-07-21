@@ -80,17 +80,19 @@ export default function Hero() {
       className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian"
     >
       {/* Living background — slow-drifting bio-teal orb */}
-      <AmbientGlow
-        colorClass="bg-teal-500/15"
-        positionClass="absolute left-1/2 top-1/3"
-        sizeClass="h-[620px] w-[620px] -translate-x-1/2"
-        blur="blur-[160px]"
-      />
-      <AmbientGlow
-        colorClass="bg-cyan-500/10"
-        positionClass="absolute -right-32 bottom-0"
-        sizeClass="h-[480px] w-[480px]"
-      />
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <AmbientGlow
+          colorClass="bg-teal-500/15"
+          positionClass="absolute left-1/2 top-1/3"
+          sizeClass="h-[620px] w-[620px] -translate-x-1/2"
+          blur="blur-[160px]"
+        />
+        <AmbientGlow
+          colorClass="bg-cyan-500/10"
+          positionClass="absolute -right-32 bottom-0"
+          sizeClass="h-[480px] w-[480px]"
+        />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
       {/* Floating 3D glass spheres (desktop only for 60fps mobile) */}
@@ -147,7 +149,15 @@ export default function Hero() {
               variants={blurReveal}
               className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
             >
-              <GlassButton href="#products" variant="primary">
+              <GlassButton
+                href="#products"
+                variant="primary"
+                className="relative z-50 cursor-pointer pointer-events-auto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Explore Our Products
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </GlassButton>
