@@ -213,7 +213,7 @@ export default function ProductShowcase() {
   const radius = 360;
 
   return (
-    <section id="products" className="relative overflow-hidden bg-obsidian py-24 lg:py-32">
+    <section id="products" data-section="products" className="relative overflow-x-clip bg-obsidian py-24 lg:py-32">
       <AmbientGlow colorClass="bg-teal-500/10" positionClass="absolute -left-32 top-1/4" />
       <AmbientGlow colorClass="bg-cyan-500/10" positionClass="absolute -right-32 bottom-1/4" />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />

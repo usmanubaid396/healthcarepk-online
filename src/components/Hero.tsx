@@ -149,18 +149,25 @@ export default function Hero() {
               variants={blurReveal}
               className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
             >
-              <GlassButton
-                href="#products"
-                variant="primary"
-                className="relative z-50 cursor-pointer pointer-events-auto"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                  e.stopPropagation();
+                  const el = document.getElementById('products') || document.querySelector('[data-section="products"]');
+                  if (el) {
+                    const yOffset = -80; // Adjust for fixed navbar height
+                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  } else {
+                    window.location.hash = 'products';
+                  }
                 }}
+                className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-bioteal-600 px-6 py-3 font-semibold text-obsidian shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] active:scale-95"
               >
                 Explore Our Products
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </GlassButton>
+              </button>
               <GlassButton href="#contact" variant="secondary">
                 <FlaskConical className="h-4 w-4" />
                 Contact Sales
