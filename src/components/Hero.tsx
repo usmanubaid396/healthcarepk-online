@@ -94,7 +94,7 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
       {/* Floating 3D glass spheres (desktop only for 60fps mobile) */}
-      <div className="hidden sm:block">
+      <div className="pointer-events-none hidden sm:block">
         {SPHERES.map((s, i) => (
           <FloatingSphere key={i} {...s} reduced={reduced} />
         ))}
@@ -138,7 +138,7 @@ export default function Hero() {
               variants={blurReveal}
               className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-slate-200/80 sm:text-xl"
             >
-              Healthcare Pharmaceuticals Pakistan is a WHO-GMP, ISO 9001:2015, and cGMP
+              Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
               compliant manufacturer of registered medicines — delivering quality,
               accessible therapies trusted worldwide.
             </motion.p>
@@ -160,7 +160,7 @@ export default function Hero() {
         </motion.div>
       </PerspectiveStage>
 
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-obsidian to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-obsidian to-transparent" />
     </section>
   );
 }

@@ -26,11 +26,11 @@ import {
   Search,
   SlidersHorizontal,
   Tag,
-  ArrowUpRight,
+  ExternalLink,
   PackageX,
   Pill,
 } from 'lucide-react';
-import { PRODUCTS, PRODUCT_CATEGORIES, type Product } from '../data/site';
+import { PRODUCTS, PRODUCT_CATEGORIES, DRAP_LOOKUP_URL, type Product } from '../data/site';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
 import { blurReveal, staggerContainer, fadeRise, transition, viewportOnce } from '../lib/motion';
 
@@ -125,11 +125,13 @@ function OrbitalCard({
           <p className="text-xs font-medium text-cyan-300">{product.category}</p>
         </div>
         <a
-          href="#contact"
-          className="relative z-10 mt-4 inline-flex items-center gap-1 text-xs font-semibold text-white transition-colors hover:text-cyan-300"
+          href={DRAP_LOOKUP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative z-10 mt-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-cyan-400/90 to-bioteal-600/90 px-3 py-1.5 text-xs font-semibold text-obsidian shadow-[0_4px_16px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_6px_22px_rgba(6,182,212,0.55)]"
         >
-          Inquire
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          Verify
+          <ExternalLink className="h-3.5 w-3.5" />
         </a>
       </motion.div>
     </div>
@@ -166,6 +168,15 @@ function GridCard({ product, reducedMotion }: { product: Product; reducedMotion:
       </div>
       <h3 className="mt-4 font-display text-lg font-bold tracking-tight">{product.name}</h3>
       <p className="text-xs font-medium text-cyan-300">{product.category}</p>
+      <a
+        href={DRAP_LOOKUP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative z-10 mt-4 inline-flex items-center gap-1.5 self-start rounded-full bg-gradient-to-br from-cyan-400/90 to-bioteal-600/90 px-3 py-1.5 text-xs font-semibold text-obsidian shadow-[0_4px_16px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_6px_22px_rgba(6,182,212,0.55)]"
+      >
+        Verify
+        <ExternalLink className="h-3.5 w-3.5" />
+      </a>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500"

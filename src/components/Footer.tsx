@@ -69,7 +69,14 @@ export default function Footer() {
             <address className="mt-4 space-y-3 not-italic text-sm text-slate-300/80">
               <p className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                {COMPANY.headOffice}
+                <a
+                  href={COMPANY.headOfficeMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-all duration-300 hover:text-cyan-300 hover:underline decoration-cyan-400/60 underline-offset-4"
+                >
+                  {COMPANY.headOffice}
+                </a>
               </p>
               <p className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
@@ -84,7 +91,9 @@ export default function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-slate-300/80">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0 text-cyan-400" />
-                {COMPANY.phone}
+                <a href={COMPANY.phoneHref} className="transition-colors hover:text-white">
+                  {COMPANY.phone}
+                </a>
               </li>
               {Object.entries(COMPANY.emails).map(([key, email]) => (
                 <li key={key} className="flex items-center gap-2">

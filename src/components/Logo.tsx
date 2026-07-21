@@ -13,12 +13,12 @@ export default function Logo({ variant = 'light', className = '' }: LogoProps) {
       transition={transition}
       style={{ transformStyle: 'preserve-3d' }}
       className={`group inline-flex items-center gap-2.5 ${className}`}
-      aria-label="Healthcare Pharmaceuticals Pakistan — home"
+      aria-label="Healthcare Pharmaceuticals — home"
     >
       <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400/20 to-bioteal-600/20 ring-1 ring-white/10 shadow-[0_8px_24px_rgba(6,182,212,0.25)] will-change-transform">
         <img
           src={LOGO_SRC}
-          alt="Healthcare Pharmaceuticals Pakistan logo"
+          alt="Healthcare Pharmaceuticals logo"
           className="h-full w-full object-contain p-1"
           loading="eager"
         />

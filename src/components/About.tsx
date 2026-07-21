@@ -95,7 +95,7 @@ export default function About() {
               Committed to quality, driven by access
             </motion.h2>
             <motion.p variants={fadeRise} className="mt-5 text-lg leading-relaxed text-slate-300/80">
-              For over two decades, Healthcare Pharmaceuticals Pakistan has paired rigorous
+              For over two decades, Healthcare Pharmaceuticals has paired rigorous
               quality systems with responsible pricing — bringing life-saving therapies
               within reach of patients worldwide.
             </motion.p>

@@ -101,20 +101,27 @@ export default function Contact() {
                   {COMPANY.emails.export}
                 </span>
               </a>
-              <a href={`tel:${COMPANY.phone.replace(/[^+\d]/g, '')}`} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
+              <a href={COMPANY.phoneHref} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
                 <span>
                   <span className="block text-xs uppercase tracking-wider text-cyan-300">Phone</span>
                   {COMPANY.phone}
                 </span>
               </a>
-              <div className="flex items-start gap-3 text-slate-200">
+              <a
+                href={COMPANY.headOfficeMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 text-slate-200 transition-all duration-300 hover:text-cyan-300"
+              >
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
                 <span>
                   <span className="block text-xs uppercase tracking-wider text-cyan-300">Head Office</span>
-                  {COMPANY.headOffice}
+                  <span className="transition-all duration-300 hover:underline decoration-cyan-400/60 underline-offset-4">
+                    {COMPANY.headOffice}
+                  </span>
                 </span>
-              </div>
+              </a>
             </div>
           </motion.div>
 
