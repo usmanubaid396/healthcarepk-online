@@ -1,5 +1,4 @@
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
-import { useCallback, type PointerEvent as ReactPointerEvent } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
 import GlassButton from './ui/GlassButton';
@@ -52,27 +51,6 @@ function FloatingSphere({
 
 export default function Hero() {
   const reduced = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rx = useSpring(my, { stiffness: 50, damping: 20 });
-  const ry = useSpring(mx, { stiffness: 50, damping: 20 });
-
-  const onPointerMove = useCallback(
-    (e: ReactPointerEvent<HTMLDivElement>) => {
-      if (reduced) return;
-      const r = e.currentTarget.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      mx.set(py * 6);
-      my.set(px * -6);
-    },
-    [mx, my, reduced],
-  );
-
-  const onPointerLeave = useCallback(() => {
-    mx.set(0);
-    my.set(0);
-  }, [mx, my]);
 
   return (
     <section
@@ -103,10 +81,7 @@ export default function Hero() {
       </div>
 
       <PerspectiveStage perspective={1000} className="relative z-10 h-full">
-        <motion.div
-          onPointerMove={onPointerMove}
-          onPointerLeave={onPointerLeave}
-          style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d', willChange: 'transform' }}
+        <div
           className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center"
         >
           <motion.div
@@ -174,7 +149,7 @@ export default function Hero() {
               </GlassButton>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </PerspectiveStage>
 
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-obsidian to-transparent" />
