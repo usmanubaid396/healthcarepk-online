@@ -29,13 +29,14 @@ import {
   ExternalLink,
   PackageX,
   Pill,
+  Download,
 } from 'lucide-react';
 import { PRODUCTS, PRODUCT_CATEGORIES, DRAP_LOOKUP_URL, type Product } from '../data/site';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
 import { blurReveal, staggerContainer, fadeRise, transition, viewportOnce } from '../lib/motion';
 
 /* ------------------------------------------------------------------ */
-/*  Orbital card — desktop 3D                                          */
+/*  Orbital card — desktop 3D                                        */
 /* ------------------------------------------------------------------ */
 
 function OrbitalCard({
@@ -139,7 +140,7 @@ function OrbitalCard({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Mobile grid card                                                   */
+/*  Mobile grid card                                                  */
 /* ------------------------------------------------------------------ */
 
 function GridCard({ product, reducedMotion }: { product: Product; reducedMotion: boolean }) {
@@ -191,7 +192,7 @@ function GridCard({ product, reducedMotion }: { product: Product; reducedMotion:
 }
 
 /* ------------------------------------------------------------------ */
-/*  Root                                                               */
+/*  Root                                                              */
 /* ------------------------------------------------------------------ */
 
 export default function ProductShowcase() {
@@ -241,6 +242,21 @@ export default function ProductShowcase() {
               Search by name or therapeutic category. Every product is manufactured under
               GMP and registered for distribution.
             </motion.p>
+
+            {/* --- NEW DOWNLOAD CATALOG BUTTON --- */}
+            <motion.div variants={blurReveal} className="mt-6">
+              <a
+                href="/products-catalog.pdf"
+                download="Healthcare_Pharmaceuticals_Product_Catalog.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full glass px-5 py-2.5 text-xs font-semibold text-cyan-300 ring-1 ring-cyan-400/30 transition-all duration-300 hover:bg-gradient-to-br hover:from-cyan-400 hover:to-bioteal-600 hover:text-obsidian hover:ring-transparent hover:shadow-[0_6px_20px_rgba(6,182,212,0.45)] active:scale-95"
+              >
+                <Download className="h-4 w-4" />
+                Download Full B2B Product Catalog (PDF)
+              </a>
+            </motion.div>
+            {/* ----------------------------------- */}
           </div>
 
           <motion.div variants={blurReveal} className="w-full lg:max-w-md">
@@ -254,7 +270,7 @@ export default function ProductShowcase() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search medicines, e.g. PRACTEL, ALODOX…"
                 className="w-full rounded-full glass py-3.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/20"
-              />
+              >
             </div>
           </motion.div>
         </motion.div>
