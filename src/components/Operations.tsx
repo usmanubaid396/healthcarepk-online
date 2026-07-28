@@ -1,79 +1,70 @@
 import { motion } from 'framer-motion';
-import { Users, Pill, FlaskConical, type LucideIcon } from 'lucide-react';
-import { STATS, type StatItem } from '../data/site';
-import { AmbientGlow, PerspectiveStage } from './ui/Stage';
-import { staggerContainer, fadeRise, transition, viewportOnce, tiltPop } from '../lib/motion';
-import Counter from './Counter';
+import { Users, Pill, FlaskConical } from 'lucide-react';
+import { transition, viewportOnce } from '../lib/motion';
 
-const ICONS: Record<StatItem['id'], LucideIcon> = {
-  employees: Users,
-  formulations: Pill,
-  molecules: FlaskConical,
-};
+const STATS = [
+  {
+    icon: Users,
+    value: '211+',
+    label: 'DEDICATED EMPLOYEES',
+    description: 'A skilled workforce across manufacturing, quality, and R&D.',
+  },
+  {
+    icon: Pill,
+    value: '65+',
+    label: 'REGISTERED FORMULATIONS',
+    description: 'A growing portfolio across multiple therapeutic categories.',
+  },
+  {
+    icon: FlaskConical,
+    value: '38+',
+    label: 'GENERIC MOLECULES',
+    description: 'Diverse active ingredients manufactured in-house.',
+  },
+];
 
 export default function Operations() {
   return (
-    <section id="operations" className="relative overflow-hidden bg-obsidian py-24 lg:py-32">
-      <AmbientGlow colorClass="bg-cyan-500/10" positionClass="absolute -right-32 top-1/4" />
-      <PerspectiveStage perspective={1000} className="container-tight relative">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="mx-auto max-w-2xl text-center"
-        >
-          <motion.span variants={fadeRise} className="eyebrow justify-center">
+    <section id="operations" data-section="operations" className="relative py-24 bg-obsidian text-white overflow-hidden">
+      <div className="container-tight relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
             Operations
-          </motion.span>
-          <motion.h2
-            variants={fadeRise}
-            className="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
-          >
+          </span>
+          <h2 className="mt-3 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
             The scale behind our quality
-          </motion.h2>
-          <motion.p variants={fadeRise} className="mt-4 text-slate-300/80">
-            Our people, portfolio, and molecules reflect a commitment to manufacturing
-            excellence.
-          </motion.p>
-        </motion.div>
+          </h2>
+          <p className="mt-4 text-slate-300/80 text-lg">
+            Our people, portfolio, and molecules reflect a commitment to manufacturing excellence.
+          </p>
+        </div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="mt-14 grid gap-6 sm:grid-cols-3"
-        >
-          {STATS.map((stat) => {
-            const Icon = ICONS[stat.id];
-            return (
-              <motion.div
-                key={stat.id}
-                variants={fadeRise}
-                whileHover={tiltPop}
-                transition={transition}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="glass group relative overflow-hidden p-8 text-center will-change-transform"
-              >
-                <span className="absolute inset-x-0 top-0 h-1 w-0 bg-gradient-to-r from-cyan-400 to-bioteal-600 transition-all duration-500 group-hover:w-full" />
-                <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-cyan-300 ring-1 ring-white/10 transition-colors group-hover:bg-cyan-500/20">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <div className="mt-5 font-display text-5xl font-extrabold tracking-tight text-white">
-                  <Counter value={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="mt-1 text-sm font-semibold uppercase tracking-wider text-cyan-300">
-                  {stat.label}
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-slate-300/70">
-                  {stat.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </PerspectiveStage>
+        <div className="grid gap-8 md:grid-cols-3">
+          {STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ ...transition, delay: i * 0.15 }}
+              className="relative p-8 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-xl flex flex-col items-center text-center group hover:border-teal-500/40 transition-colors"
+            >
+              <div className="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-300 mb-6 group-hover:scale-110 transition-transform">
+                <stat.icon className="w-6 h-6" />
+              </div>
+              <span className="font-display text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-2">
+                {stat.value}
+              </span>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-cyan-300 mb-3">
+                {stat.label}
+              </h3>
+              <p className="text-sm text-slate-300/70 leading-relaxed">
+                {stat.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
