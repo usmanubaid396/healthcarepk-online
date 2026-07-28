@@ -4,7 +4,9 @@ import Logo from './Logo';
 
 const NAV_LINKS = [
   { label: 'Home', href: '#home' },
+  { label: 'About', href: '#about' },
   { label: 'Products', href: '#products' },
+  { label: 'Operations', href: '#operations' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -25,7 +27,7 @@ export default function Navbar() {
       const id = href.replace('#', '');
       const target = document.getElementById(id) || document.querySelector(`[data-section="${id}"]`);
       if (target) {
-        const yOffset = -80; // Navbar offset
+        const yOffset = -80;
         const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
@@ -42,7 +44,6 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <Logo />
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
@@ -67,7 +68,6 @@ export default function Navbar() {
             </a>
           </nav>
 
-          {/* Mobile Menu Toggle */}
           <button
             type="button"
             className="md:hidden p-2 text-slate-300 hover:text-white"
@@ -78,7 +78,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-slate-900 border-b border-white/10 px-4 pt-2 pb-6 shadow-xl">
           <div className="flex flex-col gap-4">
