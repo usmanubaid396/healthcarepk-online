@@ -270,7 +270,7 @@ export default function ProductShowcase() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search medicines, e.g. PRACTEL, ALODOX…"
                 className="w-full rounded-full glass py-3.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/20"
-              >
+              />
             </div>
           </motion.div>
         </motion.div>
