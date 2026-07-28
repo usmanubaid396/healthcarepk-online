@@ -3,17 +3,17 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductShowcase from './components/ProductShowcase';
 import About from './components/About';
+import Operations from './components/Operations';
 import Footer from './components/Footer';
 
 export default function App() {
-  // Global Hash Listener for direct visits (e.g. /#products or /#about)
   useEffect(() => {
     if (window.location.hash) {
       const timer = setTimeout(() => {
         const id = window.location.hash.replace('#', '');
         const target = document.getElementById(id) || document.querySelector(`[data-section="${id}"]`);
         if (target) {
-          const yOffset = -80; // Fixed navbar height offset
+          const yOffset = -80;
           const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
@@ -30,6 +30,7 @@ export default function App() {
         <Hero />
         <ProductShowcase />
         <About />
+        <Operations />
       </main>
       <Footer />
     </div>
