@@ -1,158 +1,69 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
-import { AmbientGlow, PerspectiveStage } from './ui/Stage';
-import GlassButton from './ui/GlassButton';
-import { blurReveal, staggerContainer } from '../lib/motion';
-
-/* Three floating glass-morphic spheres at different depths */
-const SPHERES = [
-  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
-  { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
-  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', z: 25, delay: 0.6 },
-];
-
-function FloatingSphere({
-  size,
-  pos,
-  z,
-  delay,
-  reduced,
-}: {
-  size: string;
-  pos: string;
-  z: number;
-  delay: number;
-  reduced: boolean | null;
-}) {
-  return (
-    <motion.div
-      aria-hidden
-      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/10 to-cyan-400/10 backdrop-blur-2xl border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
-      style={{ zIndex: z, willChange: 'transform' }}
-      animate={
-        reduced
-          ? undefined
-          : {
-              scale: [1, 1.08, 1],
-              rotate: [0, 18, 0],
-              y: [0, -16, 0],
-            }
-      }
-      transition={
-        reduced
-          ? undefined
-          : { duration: 10, repeat: Infinity, ease: 'easeInOut', delay }
-      }
-    >
-      <div className={`${size} rounded-full opacity-60`} />
-    </motion.div>
-  );
-}
+import React from 'react';
+import { ArrowRight, PhoneCall } from 'lucide-react';
 
 export default function Hero() {
-  const reduced = useReducedMotion();
+  const scrollToProducts = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const target = document.getElementById('products') || document.querySelector('[data-section="products"]');
+    if (target) {
+      const yOffset = -80;
+      const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.location.hash = 'products';
+    }
+  };
 
   return (
-    <section
-      id="home"
-      className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian"
-    >
-      {/* Living background — slow-drifting bio-teal orb */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <AmbientGlow
-          colorClass="bg-teal-500/15"
-          positionClass="absolute left-1/2 top-1/3"
-          sizeClass="h-[620px] w-[620px] -translate-x-1/2"
-          blur="blur-[160px]"
-        />
-        <AmbientGlow
-          colorClass="bg-cyan-500/10"
-          positionClass="absolute -right-32 bottom-0"
-          sizeClass="h-[480px] w-[480px]"
-        />
-      </div>
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
-
-      {/* Floating 3D glass spheres (desktop only for 60fps mobile) */}
-      <div className="pointer-events-none hidden sm:block">
-        {SPHERES.map((s, i) => (
-          <FloatingSphere key={i} {...s} reduced={reduced} />
-        ))}
+    <section id="home" className="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden">
+      {/* Background Glows & Orbs — MUST HAVE pointer-events-none */}
+      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
+        <div className="w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 left-10 w-48 h-48 bg-slate-800/40 rounded-full blur-2xl" />
+        <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-teal-900/20 rounded-full blur-3xl" />
       </div>
 
-      <PerspectiveStage perspective={1000} className="relative z-10 h-full">
-        <div
-          className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center"
-        >
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="show"
-            className="max-w-4xl"
-          >
-            <motion.span
-              variants={blurReveal}
-              className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200"
-            >
-              <ShieldCheck className="h-4 w-4" />
-              WHO-GMP · ISO 9001:2015 · cGMP Compliant
-            </motion.span>
-
-            <PerspectiveStage perspective={1000} className="mt-7">
-              <motion.h1
-                variants={blurReveal}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-7xl lg:text-8xl"
-              >
-                Making the
-                <span className="block bg-gradient-to-br from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
-                  World Healthier
-                </span>
-              </motion.h1>
-            </PerspectiveStage>
-
-            <motion.p
-              variants={blurReveal}
-              className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-slate-200/80 sm:text-xl"
-            >
-              Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
-              compliant manufacturer of registered medicines — delivering quality,
-              accessible therapies trusted worldwide.
-            </motion.p>
-
-            <motion.div
-              variants={blurReveal}
-              className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  const el = document.getElementById('products') || document.querySelector('[data-section="products"]');
-                  if (el) {
-                    const yOffset = -80; // Adjust for fixed navbar height
-                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                  } else {
-                    window.location.hash = 'products';
-                  }
-                }}
-                className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-bioteal-600 px-6 py-3 font-semibold text-obsidian shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] active:scale-95"
-              >
-                Explore Our Products
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
-              <GlassButton href="#contact" variant="secondary">
-                <FlaskConical className="h-4 w-4" />
-                Contact Sales
-              </GlassButton>
-            </motion.div>
-          </motion.div>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+        {/* Compliance Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold tracking-wider uppercase mb-8 backdrop-blur-md">
+          <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+          WHO-GMP • ISO 9001:2015 • cGMP COMPLIANT
         </div>
-      </PerspectiveStage>
 
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-obsidian to-transparent" />
+        {/* Hero Title */}
+        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-6">
+          Making the <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-200 to-white">
+            World Healthier
+          </span>
+        </h1>
+
+        {/* Hero Description */}
+        <p className="max-w-2xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed mb-10">
+          Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP compliant manufacturer of registered medicines — delivering quality, accessible therapies trusted worldwide.
+        </p>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-50">
+          <button
+            type="button"
+            onClick={scrollToProducts}
+            className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 px-8 py-4 rounded-full bg-teal-400 text-slate-950 font-semibold hover:bg-teal-300 active:scale-95 transition-all shadow-lg shadow-teal-500/20"
+          >
+            Explore Our Products
+            <ArrowRight className="w-5 h-5" />
+          </button>
+
+          <a
+            href="#contact"
+            className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 px-8 py-4 rounded-full border border-slate-700 bg-slate-900/80 text-white font-medium hover:border-slate-500 hover:bg-slate-800 transition-all backdrop-blur-md"
+          >
+            <PhoneCall className="w-4 h-4 text-teal-400" />
+            Contact Sales
+          </a>
+        </div>
+      </div>
     </section>
   );
 }
