@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { transition } from '../lib/motion';
 
-const LOGO_SRC = '/Gemini_Generated_Image_3cdfrk3cdfrk3cdf.png';
+// --- UPDATED TO POINT TO YOUR NEW LOGO FILE ---
+const LOGO_SRC = '/logo.png';
 
 type LogoProps = { variant?: 'light' | 'default'; className?: string };
 
