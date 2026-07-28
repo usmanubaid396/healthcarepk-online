@@ -18,6 +18,20 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
+      const id = href.replace('#', '');
+      const target = document.getElementById(id) || document.querySelector(`[data-section="${id}"]`);
+      if (target) {
+        const yOffset = -80; // Navbar offset
+        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b ${
@@ -26,7 +40,6 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo Component */}
           <Logo />
 
           {/* Desktop Navigation */}
@@ -35,13 +48,13 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
+                onClick={(e) => handleScrollTo(e, link.href)}
+                className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
             ))}
             
-            {/* Navbar PDF Download Button */}
             <a
               href="/products-catalog.pdf"
               download="Healthcare_Pharmaceuticals_Product_Catalog.pdf"
@@ -73,7 +86,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => handleScrollTo(e, link.href)}
                 className="text-base font-medium text-slate-300 hover:text-cyan-400 transition-colors"
               >
                 {link.label}
