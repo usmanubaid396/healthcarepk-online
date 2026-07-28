@@ -3,7 +3,6 @@ import { MapPin, Phone, Mail, Linkedin, Facebook, Youtube } from 'lucide-react';
 import { COMPANY, FOOTER_LINKS } from '../data/site';
 import { AmbientGlow } from './ui/Stage';
 import { transition, viewportOnce } from '../lib/motion';
-import Logo from './Logo';
 
 const SOCIALS = [
   { icon: Linkedin, label: 'LinkedIn', href: '#' },
@@ -27,7 +26,13 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <Logo />
+            {/* --- UPDATED LOGO IMAGE --- */}
+            <img 
+              src="/logo.png" 
+              alt="Healthcare Pharmaceuticals Logo" 
+              className="h-12 w-auto object-contain mb-2" 
+            />
+            {/* -------------------------- */}
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-300/70">
               {COMPANY.name} — a WHO-GMP, ISO 9001:2015, and cGMP compliant manufacturer of
               registered medicines.
