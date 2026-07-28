@@ -1,22 +1,35 @@
-import Header from './components/Header';
+import React, { useEffect } from 'react';
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
 import ProductShowcase from './components/ProductShowcase';
-import Operations from './components/Operations';
-import Contact from './components/Contact';
+import About from './components/About';
 import Footer from './components/Footer';
 
 export default function App() {
+  // Global Hash Listener for direct visits (e.g. /#products or /#about)
+  useEffect(() => {
+    if (window.location.hash) {
+      const timer = setTimeout(() => {
+        const id = window.location.hash.replace('#', '');
+        const target = document.getElementById(id) || document.querySelector(`[data-section="${id}"]`);
+        if (target) {
+          const yOffset = -80; // Fixed navbar height offset
+          const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-obsidian text-white">
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-grid-faint bg-grid opacity-[0.02]" />
-      <Header />
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-teal-500 selection:text-slate-950 overflow-x-clip">
+      <Navbar />
       <main>
         <Hero />
-        <About />
         <ProductShowcase />
-        <Operations />
-        <Contact />
+        <About />
       </main>
       <Footer />
     </div>
