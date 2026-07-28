@@ -1,14 +1,16 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
-import GlassButton from './ui/GlassButton';
 import { blurReveal, staggerContainer } from '../lib/motion';
 
-/* Three floating glass-morphic spheres at different depths */
+/* Enhanced floating glass-morphic spheres for a richer bubbly effect */
 const SPHERES = [
   { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
   { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
   { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', z: 25, delay: 0.6 },
+  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'right-[10%] top-[58%]', z: 15, delay: 1.8 },
+  { size: 'h-14 w-14 sm:h-20 sm:w-20', pos: 'left-[42%] top-[15%]', z: 35, delay: 0.9 },
+  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[32%] bottom-[22%]', z: 22, delay: 2.4 },
 ];
 
 function FloatingSphere({
@@ -27,24 +29,24 @@ function FloatingSphere({
   return (
     <motion.div
       aria-hidden
-      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/10 to-cyan-400/10 backdrop-blur-2xl border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
+      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/15 to-cyan-400/15 backdrop-blur-2xl border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
       style={{ zIndex: z, willChange: 'transform' }}
       animate={
         reduced
           ? undefined
           : {
-              scale: [1, 1.08, 1],
-              rotate: [0, 18, 0],
-              y: [0, -16, 0],
+              scale: [1, 1.12, 1],
+              rotate: [0, 24, 0],
+              y: [0, -22, 0],
             }
       }
       transition={
         reduced
           ? undefined
-          : { duration: 10, repeat: Infinity, ease: 'easeInOut', delay }
+          : { duration: 9, repeat: Infinity, ease: 'easeInOut', delay }
       }
     >
-      <div className={`${size} rounded-full opacity-60`} />
+      <div className={`${size} rounded-full opacity-70`} />
     </motion.div>
   );
 }
@@ -52,28 +54,52 @@ function FloatingSphere({
 export default function Hero() {
   const reduced = useReducedMotion();
 
+  const handleScrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById('contact') || document.querySelector('[data-section="contact"]');
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.location.hash = 'contact';
+    }
+  };
+
+  const handleScrollToProducts = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById('products') || document.querySelector('[data-section="products"]');
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.location.hash = 'products';
+    }
+  };
+
   return (
     <section
       id="home"
       className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian"
     >
-      {/* Living background — slow-drifting bio-teal orb */}
+      {/* Living background — slow-drifting bio-teal orbs */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <AmbientGlow
-          colorClass="bg-teal-500/15"
+          colorClass="bg-teal-500/20"
           positionClass="absolute left-1/2 top-1/3"
-          sizeClass="h-[620px] w-[620px] -translate-x-1/2"
+          sizeClass="h-[680px] w-[680px] -translate-x-1/2"
           blur="blur-[160px]"
         />
         <AmbientGlow
-          colorClass="bg-cyan-500/10"
+          colorClass="bg-cyan-500/15"
           positionClass="absolute -right-32 bottom-0"
-          sizeClass="h-[480px] w-[480px]"
+          sizeClass="h-[520px] w-[520px]"
         />
       </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
-      {/* Floating 3D glass spheres (desktop only for 60fps mobile) */}
+      {/* Floating 3D glass spheres */}
       <div className="pointer-events-none hidden sm:block">
         {SPHERES.map((s, i) => (
           <FloatingSphere key={i} {...s} reduced={reduced} />
@@ -81,9 +107,7 @@ export default function Hero() {
       </div>
 
       <PerspectiveStage perspective={1000} className="relative z-10 h-full">
-        <div
-          className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center"
-        >
+        <div className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -126,27 +150,21 @@ export default function Hero() {
             >
               <button
                 type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  const el = document.getElementById('products') || document.querySelector('[data-section="products"]');
-                  if (el) {
-                    const yOffset = -80; // Adjust for fixed navbar height
-                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                  } else {
-                    window.location.hash = 'products';
-                  }
-                }}
+                onClick={handleScrollToProducts}
                 className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-bioteal-600 px-6 py-3 font-semibold text-obsidian shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] active:scale-95"
               >
                 Explore Our Products
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
-              <GlassButton href="#contact" variant="secondary">
-                <FlaskConical className="h-4 w-4" />
+
+              <button
+                type="button"
+                onClick={handleScrollToContact}
+                className="relative z-50 cursor-pointer pointer-events-auto inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 font-medium text-white backdrop-blur-md transition-all hover:border-slate-500 hover:bg-slate-800"
+              >
+                <FlaskConical className="h-4 w-4 text-teal-400" />
                 Contact Sales
-              </GlassButton>
+              </button>
             </motion.div>
           </motion.div>
         </div>
