@@ -12,7 +12,8 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-obsidian text-white">
+    {/* --- ADDED id="contact" and data-section="contact" BELOW --- */}
+    <footer id="contact" data-section="contact" className="relative overflow-hidden bg-obsidian text-white">
       <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.02]" />
       <AmbientGlow colorClass="bg-teal-500/10" positionClass="absolute -top-24 left-1/3" sizeClass="h-64 w-64" />
 
@@ -26,13 +27,11 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            {/* --- UPDATED LOGO IMAGE --- */}
             <img 
               src="/logo.png" 
               alt="Healthcare Pharmaceuticals Logo" 
               className="h-12 w-auto object-contain mb-2" 
             />
-            {/* -------------------------- */}
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-300/70">
               {COMPANY.name} — a WHO-GMP, ISO 9001:2015, and cGMP compliant manufacturer of
               registered medicines.
