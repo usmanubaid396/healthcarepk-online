@@ -3,24 +3,22 @@ import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow } from './ui/Stage';
 
 const SPHERES = [
-  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
-  { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
-  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', z: 25, delay: 0.6 },
-  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'right-[10%] top-[58%]', z: 15, delay: 1.8 },
-  { size: 'h-14 w-14 sm:h-20 sm:w-20', pos: 'left-[42%] top-[15%]', z: 35, delay: 0.9 },
-  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[32%] bottom-[22%]', z: 22, delay: 2.4 },
+  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', delay: 0 },
+  { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', delay: 1.2 },
+  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', delay: 0.6 },
+  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'right-[10%] top-[58%]', delay: 1.8 },
+  { size: 'h-14 w-14 sm:h-20 sm:w-20', pos: 'left-[42%] top-[15%]', delay: 0.9 },
+  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[32%] bottom-[22%]', delay: 2.4 },
 ];
 
 function FloatingSphere({
   size,
   pos,
-  z,
   delay,
   reduced,
 }: {
   size: string;
   pos: string;
-  z: number;
   delay: number;
   reduced: boolean | null;
 }) {
@@ -28,7 +26,7 @@ function FloatingSphere({
     <motion.div
       aria-hidden
       className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/15 to-cyan-400/15 backdrop-blur-2xl border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
-      style={{ zIndex: z, willChange: 'transform' }}
+      style={{ willChange: 'transform' }}
       animate={
         reduced
           ? undefined
@@ -74,24 +72,26 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center py-24 sm:py-0">
-      {/* Background ambient lighting */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      
+      {/* EXTREMELY BENEATH LAYER: Background Lighting, Grid, and 6 Bubbly Spheres (z-0) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <AmbientGlow
           colorClass="bg-teal-500/20"
           positionClass="absolute left-1/2 top-1/3"
           sizeClass="h-[680px] w-[680px] -translate-x-1/2"
           blur="blur-[160px]"
         />
-      </div>
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
+        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
-      {/* 6 Floating Bubbly Spheres */}
-      <div className="pointer-events-none hidden sm:block">
-        {SPHERES.map((s, i) => (
-          <FloatingSphere key={i} {...s} reduced={reduced} />
-        ))}
+        {/* 6 Floating Bubbly Spheres */}
+        <div className="hidden sm:block absolute inset-0">
+          {SPHERES.map((s, i) => (
+            <FloatingSphere key={i} {...s} reduced={reduced} />
+          ))}
+        </div>
       </div>
 
+      {/* FOREGROUND CONTENT LAYER (z-10) */}
       <div className="container-tight relative z-10 pt-16 sm:pt-28 pb-12 text-center flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
@@ -103,7 +103,7 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Video Text Mask Container with pointer-events-none to prevent blocking */}
+        {/* Video Text Mask Container with pointer-events-none */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -213,7 +213,7 @@ export default function Hero() {
           accessible therapies trusted worldwide.
         </motion.p>
 
-        {/* Action Buttons with explicit pointer-events-auto and higher z-index */}
+        {/* Action Buttons with explicit pointer-events-auto */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
