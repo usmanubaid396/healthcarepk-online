@@ -3,7 +3,6 @@ import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow, PerspectiveStage } from './ui/Stage';
 import { blurReveal, staggerContainer } from '../lib/motion';
 
-/* Enhanced floating glass-morphic spheres for a richer bubbly effect */
 const SPHERES = [
   { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
   { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
@@ -79,11 +78,7 @@ export default function Hero() {
   };
 
   return (
-    <section
-      id="home"
-      className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian"
-    >
-      {/* Living background — slow-drifting bio-teal orbs */}
+    <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-obsidian">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <AmbientGlow
           colorClass="bg-teal-500/20"
@@ -99,7 +94,6 @@ export default function Hero() {
       </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
-      {/* Floating 3D glass spheres */}
       <div className="pointer-events-none hidden sm:block">
         {SPHERES.map((s, i) => (
           <FloatingSphere key={i} {...s} reduced={reduced} />
@@ -108,12 +102,7 @@ export default function Hero() {
 
       <PerspectiveStage perspective={1000} className="relative z-10 h-full">
         <div className="container-tight flex min-h-[100svh] flex-col items-center justify-center pt-28 pb-20 text-center">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="show"
-            className="max-w-4xl"
-          >
+          <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-4xl">
             <motion.span
               variants={blurReveal}
               className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200"
@@ -144,10 +133,7 @@ export default function Hero() {
               accessible therapies trusted worldwide.
             </motion.p>
 
-            <motion.div
-              variants={blurReveal}
-              className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
+            <motion.div variants={blurReveal} className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 type="button"
                 onClick={handleScrollToProducts}
