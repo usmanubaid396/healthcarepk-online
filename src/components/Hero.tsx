@@ -47,7 +47,7 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Borderless Video Text Mask */}
+        {/* Video Text Mask with Letter Borders */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -91,6 +91,7 @@ export default function Hero() {
               </mask>
             </defs>
 
+            {/* Video embedded behind the text mask */}
             <foreignObject x="0" y="0" width="1200" height="360" mask="url(#hero-text-mask)">
               <div className="w-full h-full relative">
                 <video
@@ -104,6 +105,44 @@ export default function Hero() {
                 </video>
               </div>
             </foreignObject>
+
+            {/* Letter Borders / Outlines Layer drawn on top */}
+            <text
+              x="50%"
+              y="28%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.65)"
+              strokeWidth="2.5"
+            >
+              MAKING
+            </text>
+            <text
+              x="50%"
+              y="62%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.65)"
+              strokeWidth="2.5"
+            >
+              THE WORLD
+            </text>
+            <text
+              x="50%"
+              y="96%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.65)"
+              strokeWidth="2.5"
+            >
+              HEALTHIER
+            </text>
           </svg>
         </motion.div>
 
