@@ -103,12 +103,12 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Responsive Video Text Mask Container */}
+        {/* Video Text Mask Container with pointer-events-none to prevent blocking */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto my-2 h-44 sm:h-72 md:h-88 flex items-center justify-center"
+          className="w-full max-w-5xl mx-auto my-2 h-44 sm:h-72 md:h-88 flex items-center justify-center pointer-events-none"
         >
           <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -206,23 +206,24 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0"
+          className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
         >
           Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
           compliant manufacturer of registered medicines — delivering quality,
           accessible therapies trusted worldwide.
         </motion.p>
 
+        {/* Action Buttons with explicit pointer-events-auto and higher z-index */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-6 sm:mt-9 flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row w-full px-6 sm:px-0"
+          className="mt-6 sm:mt-9 flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row w-full px-6 sm:px-0 relative z-30 pointer-events-auto"
         >
           <button
             type="button"
             onClick={handleScrollToProducts}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-teal-600 px-6 py-3 font-semibold text-slate-950 shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-teal-600 px-6 py-3 font-semibold text-slate-950 shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] cursor-pointer pointer-events-auto"
           >
             Explore Our Products
             <ArrowRight className="h-4 w-4" />
@@ -231,7 +232,7 @@ export default function Hero() {
           <button
             type="button"
             onClick={handleScrollToContact}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 font-medium text-white backdrop-blur-md transition-all hover:border-slate-500 hover:bg-slate-800 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 font-medium text-white backdrop-blur-md transition-all hover:border-slate-500 hover:bg-slate-800 cursor-pointer pointer-events-auto"
           >
             <FlaskConical className="h-4 w-4 text-teal-400" />
             Contact Sales
