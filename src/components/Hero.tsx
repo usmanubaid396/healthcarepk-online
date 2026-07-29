@@ -112,10 +112,10 @@ export default function Hero() {
         >
           <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
-              {/* Theme-based Cyan-to-Teal Gradient for Letter Borders */}
+              {/* Professional Platinum-to-Silver Metallic Gradient for Letter Borders */}
               <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#22d3ee" />
-                <stop offset="100%" stopColor="#14b8a6" />
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#94a3b8" />
               </linearGradient>
 
               <mask id="hero-text-mask">
@@ -168,7 +168,7 @@ export default function Hero() {
               </div>
             </foreignObject>
 
-            {/* Theme-colored Letter Borders / Outlines Layer */}
+            {/* Professional Metallic Letter Borders / Outlines Layer */}
             <text
               x="50%"
               y="28%"
