@@ -112,6 +112,12 @@ export default function Hero() {
         >
           <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
+              {/* Theme-based Cyan-to-Teal Gradient for Letter Borders */}
+              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#22d3ee" />
+                <stop offset="100%" stopColor="#14b8a6" />
+              </linearGradient>
+
               <mask id="hero-text-mask">
                 <rect width="1200" height="360" fill="black" />
                 <text
@@ -162,7 +168,7 @@ export default function Hero() {
               </div>
             </foreignObject>
 
-            {/* Letter Borders / Outlines Layer */}
+            {/* Theme-colored Letter Borders / Outlines Layer */}
             <text
               x="50%"
               y="28%"
@@ -170,7 +176,7 @@ export default function Hero() {
               dominantBaseline="middle"
               className="font-display font-black text-[115px] tracking-tight uppercase"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.65)"
+              stroke="url(#brand-stroke)"
               strokeWidth="2.5"
             >
               MAKING
@@ -182,7 +188,7 @@ export default function Hero() {
               dominantBaseline="middle"
               className="font-display font-black text-[115px] tracking-tight uppercase"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.65)"
+              stroke="url(#brand-stroke)"
               strokeWidth="2.5"
             >
               THE WORLD
@@ -194,7 +200,7 @@ export default function Hero() {
               dominantBaseline="middle"
               className="font-display font-black text-[115px] tracking-tight uppercase"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.65)"
+              stroke="url(#brand-stroke)"
               strokeWidth="2.5"
             >
               HEALTHIER
