@@ -78,10 +78,6 @@ export default function Footer() {
                   {COMPANY.headOffice}
                 </a>
               </p>
-              <p className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                {COMPANY.plant}
-              </p>
             </address>
           </div>
 
