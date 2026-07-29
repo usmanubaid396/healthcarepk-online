@@ -5,7 +5,7 @@ import ProductShowcase from './components/ProductShowcase';
 import About from './components/About';
 import Operations from './components/Operations';
 import Footer from './components/Footer';
-       
+
 export default function App() {
   useEffect(() => {
     if (window.location.hash) {
