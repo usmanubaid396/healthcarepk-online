@@ -236,7 +236,7 @@ export default function ProductShowcase() {
               variants={blurReveal}
               className="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
             >
-              11 registered formulations
+              65+ registered formulations
             </motion.h2>
             <motion.p variants={blurReveal} className="mt-3 max-w-xl text-slate-300/80">
               Search by name or therapeutic category. Every product is manufactured under
