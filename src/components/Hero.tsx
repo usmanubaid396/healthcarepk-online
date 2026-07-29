@@ -73,7 +73,7 @@ export default function Hero() {
   return (
     <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center py-24 sm:py-0">
       
-      {/* EXTREMELY BENEATH LAYER: Background Lighting, Grid, and 6 Bubbly Spheres (z-0) */}
+      {/* Background Lighting, Grid, and 6 Bubbly Spheres */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <AmbientGlow
           colorClass="bg-teal-500/20"
@@ -83,7 +83,6 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
-        {/* 6 Floating Bubbly Spheres */}
         <div className="hidden sm:block absolute inset-0">
           {SPHERES.map((s, i) => (
             <FloatingSphere key={i} {...s} reduced={reduced} />
@@ -91,7 +90,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* FOREGROUND CONTENT LAYER (z-10) */}
+      {/* Foreground Content Layer */}
       <div className="container-tight relative z-10 pt-16 sm:pt-28 pb-12 text-center flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
@@ -103,16 +102,26 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Video Text Mask Container with pointer-events-none */}
+        {/* Mobile Static Heading (Shown only on small screens) */}
+        <div className="block sm:hidden w-full px-4 mb-6">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-white uppercase leading-tight">
+            Making <br />
+            <span className="bg-gradient-to-r from-cyan-300 to-teal-400 bg-clip-text text-transparent">
+              The World
+            </span> <br />
+            Healthier
+          </h1>
+        </div>
+
+        {/* Desktop/Tablet Video Text Mask Container (Hidden on mobile to prevent overlap) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto my-2 h-44 sm:h-72 md:h-88 flex items-center justify-center pointer-events-none"
+          className="hidden sm:flex w-full max-w-5xl mx-auto my-2 h-72 md:h-88 items-center justify-center pointer-events-none"
         >
           <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
-              {/* Professional Platinum-to-Silver Metallic Gradient for Letter Borders */}
               <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#ffffff" />
                 <stop offset="100%" stopColor="#94a3b8" />
@@ -153,7 +162,6 @@ export default function Hero() {
               </mask>
             </defs>
 
-            {/* Video embedded behind the text mask */}
             <foreignObject x="0" y="0" width="1200" height="360" mask="url(#hero-text-mask)">
               <div className="w-full h-full relative">
                 <video
@@ -168,7 +176,6 @@ export default function Hero() {
               </div>
             </foreignObject>
 
-            {/* Professional Metallic Letter Borders / Outlines Layer */}
             <text
               x="50%"
               y="28%"
@@ -212,14 +219,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
+          className="mx-auto mt-2 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
         >
           Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
           compliant manufacturer of registered medicines — delivering quality,
           accessible therapies trusted worldwide.
         </motion.p>
 
-        {/* Action Buttons with explicit pointer-events-auto */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
