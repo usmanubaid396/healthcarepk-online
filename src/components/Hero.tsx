@@ -73,7 +73,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center">
+    <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center py-24 sm:py-0">
       {/* Background ambient lighting */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <AmbientGlow
@@ -92,25 +92,25 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="container-tight relative z-10 pt-28 pb-20 text-center flex flex-col items-center">
+      <div className="container-tight relative z-10 pt-16 sm:pt-28 pb-12 text-center flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md mb-8"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md mb-6 sm:mb-8"
         >
           <ShieldCheck className="h-4 w-4" />
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Video Text Mask with Outlined Borders */}
+        {/* Responsive Video Text Mask Container */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto my-2"
+          className="w-full max-w-5xl mx-auto my-2 h-44 sm:h-72 md:h-88 flex items-center justify-center"
         >
-          <svg className="w-full h-auto overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
+          <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
               <mask id="hero-text-mask">
                 <rect width="1200" height="360" fill="black" />
@@ -206,7 +206,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl"
+          className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0"
         >
           Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
           compliant manufacturer of registered medicines — delivering quality,
@@ -217,12 +217,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-6 sm:mt-9 flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row w-full px-6 sm:px-0"
         >
           <button
             type="button"
             onClick={handleScrollToProducts}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-teal-600 px-6 py-3 font-semibold text-slate-950 shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-cyan-400 to-teal-600 px-6 py-3 font-semibold text-slate-950 shadow-[0_8px_24px_rgba(6,182,212,0.35)] transition-all hover:shadow-[0_10px_30px_rgba(6,182,212,0.55)] cursor-pointer"
           >
             Explore Our Products
             <ArrowRight className="h-4 w-4" />
@@ -231,7 +231,7 @@ export default function Hero() {
           <button
             type="button"
             onClick={handleScrollToContact}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 font-medium text-white backdrop-blur-md transition-all hover:border-slate-500 hover:bg-slate-800 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 font-medium text-white backdrop-blur-md transition-all hover:border-slate-500 hover:bg-slate-800 cursor-pointer"
           >
             <FlaskConical className="h-4 w-4 text-teal-400" />
             Contact Sales
