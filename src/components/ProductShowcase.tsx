@@ -338,7 +338,7 @@ export default function ProductShowcase() {
                 <div aria-hidden className="absolute inset-0 rounded-full bg-cyan-500/20 blur-2xl animate-pulse-aura" />
                 <div className="relative text-center">
                   <div className="font-display text-sm font-bold text-white">Core Portfolio</div>
-                  <div className="text-[10px] uppercase tracking-wider text-cyan-300">Healthcare PK</div>
+                  <div className="text-[10px] uppercase tracking-wider text-cyan-300">Healthcare Pharma</div>
                 </div>
               </div>
             </div>
