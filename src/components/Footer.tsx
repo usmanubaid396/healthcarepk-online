@@ -12,7 +12,6 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    {/* --- ADDED id="contact" and data-section="contact" BELOW --- */}
     <footer id="contact" data-section="contact" className="relative overflow-hidden bg-obsidian text-white">
       <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.02]" />
       <AmbientGlow colorClass="bg-teal-500/10" positionClass="absolute -top-24 left-1/3" sizeClass="h-64 w-64" />
@@ -25,7 +24,6 @@ export default function Footer() {
           transition={transition}
           className="grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-20"
         >
-          {/* Brand */}
           <div>
             <img 
               src="/logo.png" 
@@ -53,7 +51,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nav links */}
           <nav>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-cyan-300">Navigate</h4>
             <ul className="mt-4 space-y-3 text-sm text-slate-300/80">
@@ -67,7 +64,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Head office */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-cyan-300">Head Office</h4>
             <address className="mt-4 space-y-3 not-italic text-sm text-slate-300/80">
@@ -89,7 +85,6 @@ export default function Footer() {
             </address>
           </div>
 
-          {/* Contacts */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-cyan-300">Contact</h4>
             <ul className="mt-4 space-y-3 text-sm text-slate-300/80">
