@@ -84,7 +84,6 @@ export const COMPANY = {
   name: 'Healthcare Pharmaceuticals',
   headOffice: '40 Km, Lahore Road, Multan, 66040, Pakistan',
   headOfficeMapsUrl: 'https://maps.app.goo.gl/cadMA2kNdQoDZwdJ6',
-  plant: 'Industrial Estate Phase II, Pakistan',
   phone: '+92 304 1381382',
   phoneHref: 'tel:+923041381382',
   emails: {
