@@ -1,8 +1,57 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow } from './ui/Stage';
 
+const SPHERES = [
+  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'left-[12%] top-[28%]', z: 30, delay: 0 },
+  { size: 'h-16 w-16 sm:h-20 sm:w-20', pos: 'right-[16%] top-[20%]', z: 20, delay: 1.2 },
+  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[18%] bottom-[18%]', z: 25, delay: 0.6 },
+  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'right-[10%] top-[58%]', z: 15, delay: 1.8 },
+  { size: 'h-14 w-14 sm:h-20 sm:w-20', pos: 'left-[42%] top-[15%]', z: 35, delay: 0.9 },
+  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[32%] bottom-[22%]', z: 22, delay: 2.4 },
+];
+
+function FloatingSphere({
+  size,
+  pos,
+  z,
+  delay,
+  reduced,
+}: {
+  size: string;
+  pos: string;
+  z: number;
+  delay: number;
+  reduced: boolean | null;
+}) {
+  return (
+    <motion.div
+      aria-hidden
+      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/15 to-cyan-400/15 backdrop-blur-2xl border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
+      style={{ zIndex: z, willChange: 'transform' }}
+      animate={
+        reduced
+          ? undefined
+          : {
+              scale: [1, 1.12, 1],
+              rotate: [0, 24, 0],
+              y: [0, -22, 0],
+            }
+      }
+      transition={
+        reduced
+          ? undefined
+          : { duration: 9, repeat: Infinity, ease: 'easeInOut', delay }
+      }
+    >
+      <div className={`${size} rounded-full opacity-70`} />
+    </motion.div>
+  );
+}
+
 export default function Hero() {
+  const reduced = useReducedMotion();
+
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
     const el = document.getElementById('contact') || document.querySelector('[data-section="contact"]');
@@ -36,6 +85,13 @@ export default function Hero() {
       </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
 
+      {/* 6 Floating Bubbly Spheres */}
+      <div className="pointer-events-none hidden sm:block">
+        {SPHERES.map((s, i) => (
+          <FloatingSphere key={i} {...s} reduced={reduced} />
+        ))}
+      </div>
+
       <div className="container-tight relative z-10 pt-28 pb-20 text-center flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
@@ -47,7 +103,7 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Video Text Mask with Letter Borders */}
+        {/* Video Text Mask with Outlined Borders */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -106,7 +162,7 @@ export default function Hero() {
               </div>
             </foreignObject>
 
-            {/* Letter Borders / Outlines Layer drawn on top */}
+            {/* Letter Borders / Outlines Layer */}
             <text
               x="50%"
               y="28%"
