@@ -102,27 +102,133 @@ export default function Hero() {
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
         </motion.span>
 
-        {/* Main Hero Title with Premium Gradient & Glow */}
+        {/* Mobile Static Heading (Shown only on small screens) */}
+        <div className="block sm:hidden w-full px-4 mb-6">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-white uppercase leading-tight">
+            Making <br />
+            <span className="bg-gradient-to-r from-cyan-300 to-teal-400 bg-clip-text text-transparent">
+              The World
+            </span> <br />
+            Healthier
+          </h1>
+        </div>
+
+        {/* Desktop/Tablet Video Text Clip Container (Hidden on mobile) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto my-4 px-4"
+          className="hidden sm:block relative w-full max-w-5xl mx-auto my-2 h-72 md:h-88 pointer-events-none isolate transform-gpu"
         >
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[1.1] drop-shadow-[0_10px_30px_rgba(6,182,212,0.3)]">
-            <span className="block text-white">Making</span>
-            <span className="block bg-gradient-to-r from-cyan-300 via-teal-400 to-cyan-500 bg-clip-text text-transparent py-1">
-              The World
-            </span>
-            <span className="block text-white">Healthier</span>
-          </h1>
+          {/* SVG ClipPath Definition */}
+          <svg className="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
+            <defs>
+              <clipPath id="hero-text-clip" clipPathUnits="userSpaceOnUse">
+                <text
+                  x="600"
+                  y="101"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="font-display font-black text-[115px] tracking-tight uppercase"
+                >
+                  MAKING
+                </text>
+                <text
+                  x="600"
+                  y="223"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="font-display font-black text-[115px] tracking-tight uppercase"
+                >
+                  THE WORLD
+                </text>
+                <text
+                  x="600"
+                  y="345"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="font-display font-black text-[115px] tracking-tight uppercase"
+                >
+                  HEALTHIER
+                </text>
+              </clipPath>
+            </defs>
+          </svg>
+
+          {/* Video Container Clipped Precisely to Text Shape */}
+          <div 
+            className="absolute inset-0 w-full h-full transform-gpu overflow-hidden"
+            style={{ 
+              clipPath: 'url(#hero-text-clip)', 
+              WebkitClipPath: 'url(#hero-text-clip)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
+            >
+              <source src="/hero-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          {/* Metallic Outline / Stroke Layer on Top */}
+          <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#94a3b8" />
+              </linearGradient>
+            </defs>
+
+            <text
+              x="50%"
+              y="28%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              MAKING
+            </text>
+            <text
+              x="50%"
+              y="62%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              THE WORLD
+            </text>
+            <text
+              x="50%"
+              y="96%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[115px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              HEALTHIER
+            </text>
+          </svg>
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
+          className="mx-auto mt-2 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
         >
           Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
           compliant manufacturer of registered medicines — delivering quality,
