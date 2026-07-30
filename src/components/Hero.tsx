@@ -70,7 +70,7 @@ export default function Hero() {
     }
   };
 
-  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 440'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 100px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='20%25'%3EMAKING%3C/text%3E%3Ctext x='50%25' y='50%25'%3ETHE WORLD%3C/text%3E%3Ctext x='50%25' y='80%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
+  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 440'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 112px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='22%25'%3EMAKING%3C/text%3E%3Ctext x='50%25' y='54%25'%3ETHE WORLD%3C/text%3E%3Ctext x='50%25' y='86%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center py-24 sm:py-0">
