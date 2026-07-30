@@ -3,10 +3,12 @@ import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow } from './ui/Stage';
 
 const SPHERES = [
-  { size: 'h-20 w-20 sm:h-28 sm:w-28', pos: 'left-[10%] top-[25%]', delay: 0 },
-  { size: 'h-14 w-14 sm:h-18 sm:w-18', pos: 'right-[12%] top-[18%]', delay: 1.2 },
-  { size: 'h-16 w-16 sm:h-24 sm:w-24', pos: 'left-[15%] bottom-[15%]', delay: 0.6 },
-  { size: 'h-24 w-24 sm:h-32 sm:w-32', pos: 'right-[8%] top-[52%]', delay: 1.8 },
+  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'left-[8%] top-[22%]', delay: 0 },
+  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[12%] top-[15%]', delay: 1.2 },
+  { size: 'h-24 w-24 sm:h-30 sm:w-30', pos: 'left-[14%] bottom-[18%]', delay: 0.6 },
+  { size: 'h-32 w-32 sm:h-40 sm:w-40', pos: 'right-[8%] top-[48%]', delay: 1.8 },
+  { size: 'h-16 w-16 sm:h-22 sm:w-22', pos: 'left-[45%] top-[12%]', delay: 0.9 },
+  { size: 'h-22 w-22 sm:h-28 sm:w-28', pos: 'right-[35%] bottom-[15%]', delay: 2.4 },
 ];
 
 function FloatingSphere({
@@ -23,24 +25,24 @@ function FloatingSphere({
   return (
     <motion.div
       aria-hidden
-      className={`absolute ${pos} rounded-full bg-gradient-to-br from-white/15 to-cyan-400/15 backdrop-blur-2xl border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.4)]`}
+      className={`absolute ${pos} rounded-full bg-gradient-to-br from-cyan-400/25 to-teal-500/20 backdrop-blur-3xl border border-cyan-300/30 shadow-[0_20px_50px_rgba(6,182,212,0.25)]`}
       style={{ willChange: 'transform' }}
       animate={
         reduced
           ? undefined
           : {
-              scale: [1, 1.12, 1],
-              rotate: [0, 24, 0],
-              y: [0, -18, 0],
+              scale: [1, 1.15, 1],
+              rotate: [0, 30, 0],
+              y: [0, -24, 0],
             }
       }
       transition={
         reduced
           ? undefined
-          : { duration: 9, repeat: Infinity, ease: 'easeInOut', delay }
+          : { duration: 8, repeat: Infinity, ease: 'easeInOut', delay }
       }
     >
-      <div className={`${size} rounded-full opacity-70`} />
+      <div className={`${size} rounded-full opacity-80`} />
     </motion.div>
   );
 }
@@ -68,19 +70,19 @@ export default function Hero() {
     }
   };
 
-  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 380'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 108px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='23%25'%3EMAKING%3C/text%3E%3Ctext x='50%25' y='55%25'%3ETHE WORLD%3C/text%3E%3Ctext x='50%25' y='87%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
+  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 360'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 135px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='32%25'%3EMAKING THE WORLD%3C/text%3E%3Ctext x='50%25' y='76%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center pt-20 sm:pt-16 pb-6">
       
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <AmbientGlow
-          colorClass="bg-teal-500/20"
+          colorClass="bg-teal-500/25"
           positionClass="absolute left-1/2 top-1/3"
-          sizeClass="h-[600px] w-[600px] -translate-x-1/2"
-          blur="blur-[140px]"
+          sizeClass="h-[700px] w-[700px] -translate-x-1/2"
+          blur="blur-[160px]"
         />
-        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.025]" />
+        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03]" />
 
         <div className="hidden sm:block absolute inset-0">
           {SPHERES.map((s, i) => (
@@ -102,11 +104,10 @@ export default function Hero() {
 
         <div className="block sm:hidden w-full px-4 mb-4">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-white uppercase leading-tight">
-            Making <br />
+            Making The World <br />
             <span className="bg-gradient-to-r from-cyan-300 to-teal-400 bg-clip-text text-transparent">
-              The World
-            </span> <br />
-            Healthier
+              Healthier
+            </span>
           </h1>
         </div>
 
@@ -114,7 +115,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden sm:block relative w-full max-w-4xl mx-auto my-1 h-56 sm:h-64 md:h-72 pointer-events-none isolate transform-gpu"
+          className="hidden sm:block relative w-full max-w-5xl mx-auto my-1 h-52 sm:h-60 md:h-68 pointer-events-none isolate transform-gpu"
         >
           <div 
             className="absolute inset-0 w-full h-full transform-gpu"
