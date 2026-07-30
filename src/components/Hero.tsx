@@ -70,7 +70,8 @@ export default function Hero() {
     }
   };
 
-  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 360'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 135px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='32%25'%3EMAKING THE WORLD%3C/text%3E%3Ctext x='50%25' y='76%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
+  // Expanded viewBox width (1400) and optimized font size to prevent horizontal clipping on edges
+  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 360'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 118px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='32%25'%3EMAKING THE WORLD%3C/text%3E%3Ctext x='50%25' y='76%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center pt-20 sm:pt-16 pb-6">
@@ -115,7 +116,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden sm:block relative w-full max-w-5xl mx-auto my-1 h-52 sm:h-60 md:h-68 pointer-events-none isolate transform-gpu"
+          className="hidden sm:block relative w-full max-w-6xl mx-auto my-1 h-52 sm:h-60 md:h-68 pointer-events-none isolate transform-gpu"
         >
           <div 
             className="absolute inset-0 w-full h-full transform-gpu"
