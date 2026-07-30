@@ -113,20 +113,25 @@ export default function Hero() {
           </h1>
         </div>
 
-        {/* Desktop/Tablet Video Text Clip Container (Hidden on mobile) */}
+        {/* Desktop/Tablet Video Text Container */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden sm:block relative w-full max-w-5xl mx-auto my-2 h-72 md:h-88 pointer-events-none isolate transform-gpu"
+          className="hidden sm:flex w-full max-w-5xl mx-auto my-2 h-72 md:h-88 items-center justify-center pointer-events-none isolate transform-gpu"
         >
-          {/* SVG ClipPath Definition */}
-          <svg className="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
+          <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <clipPath id="hero-text-clip" clipPathUnits="userSpaceOnUse">
+              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#94a3b8" />
+              </linearGradient>
+
+              {/* ClipPath using exact identical coordinates to the stroke text */}
+              <clipPath id="hero-text-clip">
                 <text
-                  x="600"
-                  y="101"
+                  x="50%"
+                  y="28%"
                   textAnchor="middle"
                   dominantBaseline="middle"
                   className="font-display font-black text-[115px] tracking-tight uppercase"
@@ -134,8 +139,8 @@ export default function Hero() {
                   MAKING
                 </text>
                 <text
-                  x="600"
-                  y="223"
+                  x="50%"
+                  y="62%"
                   textAnchor="middle"
                   dominantBaseline="middle"
                   className="font-display font-black text-[115px] tracking-tight uppercase"
@@ -143,8 +148,8 @@ export default function Hero() {
                   THE WORLD
                 </text>
                 <text
-                  x="600"
-                  y="345"
+                  x="50%"
+                  y="96%"
                   textAnchor="middle"
                   dominantBaseline="middle"
                   className="font-display font-black text-[115px] tracking-tight uppercase"
@@ -153,38 +158,27 @@ export default function Hero() {
                 </text>
               </clipPath>
             </defs>
-          </svg>
 
-          {/* Video Container Clipped Precisely to Text Shape */}
-          <div 
-            className="absolute inset-0 w-full h-full transform-gpu overflow-hidden"
-            style={{ 
-              clipPath: 'url(#hero-text-clip)', 
-              WebkitClipPath: 'url(#hero-text-clip)',
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden'
-            }}
-          >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
-            >
-              <source src="/hero-video.mp4" type="video/mp4" />
-            </video>
-          </div>
+            {/* Video clipped precisely to the text shape */}
+            <foreignObject x="0" y="0" width="1200" height="360" clipPath="url(#hero-text-clip)">
+              <div 
+                className="w-full h-full relative isolate transform-gpu overflow-hidden"
+                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
+                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                >
+                  <source src="/hero-video.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </foreignObject>
 
-          {/* Metallic Outline / Stroke Layer on Top */}
-          <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="100%" stopColor="#94a3b8" />
-              </linearGradient>
-            </defs>
-
+            {/* Crisp metallic outline on top */}
             <text
               x="50%"
               y="28%"
