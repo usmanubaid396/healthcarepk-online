@@ -163,13 +163,17 @@ export default function Hero() {
             </defs>
 
             <foreignObject x="0" y="0" width="1200" height="360" mask="url(#hero-text-mask)">
-              <div className="w-full h-full relative isolate transform-gpu">
+              <div 
+                className="w-full h-full relative isolate transform-gpu overflow-hidden"
+                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+              >
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
                   className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
+                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                 >
                   <source src="/hero-video.mp4" type="video/mp4" />
                 </video>
