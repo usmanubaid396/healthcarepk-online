@@ -120,7 +120,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="hidden sm:flex w-full max-w-5xl mx-auto my-2 h-72 md:h-88 items-center justify-center pointer-events-none isolate transform-gpu"
         >
-          <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
+          <svg className="w-full h-full overflow-visible border-0 outline-none" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#ffffff" />
@@ -159,19 +159,29 @@ export default function Hero() {
               </clipPath>
             </defs>
 
-            {/* Video clipped precisely to the text shape */}
-            <foreignObject x="0" y="0" width="1200" height="360" clipPath="url(#hero-text-clip)">
+            {/* Video clipped precisely to the text shape with borders completely cleared */}
+            <foreignObject x="0" y="0" width="1200" height="360" clipPath="url(#hero-text-clip)" className="border-0 outline-none">
               <div 
-                className="w-full h-full relative isolate transform-gpu overflow-hidden"
-                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                className="w-full h-full relative isolate transform-gpu overflow-hidden border-0 outline-none ring-0"
+                style={{ 
+                  backfaceVisibility: 'hidden', 
+                  WebkitBackfaceVisibility: 'hidden',
+                  border: 'none',
+                  outline: 'none'
+                }}
               >
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                  className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none border-0 outline-none ring-0"
+                  style={{ 
+                    backfaceVisibility: 'hidden', 
+                    WebkitBackfaceVisibility: 'hidden',
+                    border: 'none',
+                    outline: 'none'
+                  }}
                 >
                   <source src="/hero-video.mp4" type="video/mp4" />
                 </video>
