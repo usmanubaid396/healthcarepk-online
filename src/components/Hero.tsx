@@ -118,7 +118,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden sm:flex w-full max-w-5xl mx-auto my-2 h-72 md:h-88 items-center justify-center pointer-events-none"
+          className="hidden sm:flex w-full max-w-5xl mx-auto my-2 h-72 md:h-88 items-center justify-center pointer-events-none isolate transform-gpu"
         >
           <svg className="w-full h-full overflow-visible" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
             <defs>
@@ -163,13 +163,13 @@ export default function Hero() {
             </defs>
 
             <foreignObject x="0" y="0" width="1200" height="360" mask="url(#hero-text-mask)">
-              <div className="w-full h-full relative">
+              <div className="w-full h-full relative isolate transform-gpu">
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transform-gpu translate-z-0 pointer-events-none"
                 >
                   <source src="/hero-video.mp4" type="video/mp4" />
                 </video>
