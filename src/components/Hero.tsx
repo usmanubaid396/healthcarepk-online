@@ -70,7 +70,7 @@ export default function Hero() {
     }
   };
 
-  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 360'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 115px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='28%25'%3EMAKING%3C/text%3E%3Ctext x='50%25' y='62%25'%3ETHE WORLD%3C/text%3E%3Ctext x='50%25' y='96%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
+  const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 440'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 100px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='20%25'%3EMAKING%3C/text%3E%3Ctext x='50%25' y='50%25'%3ETHE WORLD%3C/text%3E%3Ctext x='50%25' y='80%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center py-24 sm:py-0">
@@ -116,7 +116,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden sm:block relative w-full max-w-5xl mx-auto my-2 h-72 md:h-88 pointer-events-none isolate transform-gpu"
+          className="hidden sm:block relative w-full max-w-5xl mx-auto my-2 h-80 md:h-96 pointer-events-none isolate transform-gpu"
         >
           <div 
             className="absolute inset-0 w-full h-full transform-gpu"
@@ -141,6 +141,52 @@ export default function Hero() {
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
           </div>
+
+          <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 1200 440" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#94a3b8" />
+              </linearGradient>
+            </defs>
+
+            <text
+              x="50%"
+              y="20%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[100px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              MAKING
+            </text>
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[100px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              THE WORLD
+            </text>
+            <text
+              x="50%"
+              y="80%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="font-display font-black text-[100px] tracking-tight uppercase"
+              fill="none"
+              stroke="url(#brand-stroke)"
+              strokeWidth="2.5"
+            >
+              HEALTHIER
+            </text>
+          </svg>
         </motion.div>
 
         <motion.p
