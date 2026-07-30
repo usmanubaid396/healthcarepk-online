@@ -141,52 +141,6 @@ export default function Hero() {
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
           </div>
-
-          <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 1200 440" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="brand-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="100%" stopColor="#94a3b8" />
-              </linearGradient>
-            </defs>
-
-            <text
-              x="50%"
-              y="20%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="font-display font-black text-[100px] tracking-tight uppercase"
-              fill="none"
-              stroke="url(#brand-stroke)"
-              strokeWidth="2.5"
-            >
-              MAKING
-            </text>
-            <text
-              x="50%"
-              y="50%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="font-display font-black text-[100px] tracking-tight uppercase"
-              fill="none"
-              stroke="url(#brand-stroke)"
-              strokeWidth="2.5"
-            >
-              THE WORLD
-            </text>
-            <text
-              x="50%"
-              y="80%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="font-display font-black text-[100px] tracking-tight uppercase"
-              fill="none"
-              stroke="url(#brand-stroke)"
-              strokeWidth="2.5"
-            >
-              HEALTHIER
-            </text>
-          </svg>
         </motion.div>
 
         <motion.p
