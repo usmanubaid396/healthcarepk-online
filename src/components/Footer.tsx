@@ -11,6 +11,19 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const id = href.replace('#', '');
+      const target = document.getElementById(id) || document.querySelector(`[data-section="${id}"]`);
+      if (target) {
+        const yOffset = -80;
+        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <footer id="contact" data-section="contact" className="relative overflow-hidden bg-obsidian text-white">
       <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.02]" />
@@ -56,7 +69,11 @@ export default function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-slate-300/80">
               {FOOTER_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="transition-colors hover:text-white">
+                  <a 
+                    href={link.href} 
+                    onClick={(e) => handleScrollTo(e, link.href)}
+                    className="transition-colors hover:text-white cursor-pointer"
+                  >
                     {link.label}
                   </a>
                 </li>
