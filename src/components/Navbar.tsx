@@ -1,15 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Download } from 'lucide-react';
 import Logo from './Logo';
-
-const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Products', href: '#products' },
-  { label: 'Operations', href: '#operations' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
-];
+import { NAV_LINKS } from '../data/site';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
