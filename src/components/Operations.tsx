@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
 import { Users, Pill, FlaskConical, Activity, ShieldCheck } from 'lucide-react';
 import { AmbientGlow, GlassCard, PerspectiveStage } from './ui/Stage';
 import { staggerContainer, fadeRise, transition, viewportOnce } from '../lib/motion';
@@ -6,29 +7,56 @@ import { staggerContainer, fadeRise, transition, viewportOnce } from '../lib/mot
 const STATS = [
   {
     icon: Users,
-    value: '211+',
+    value: 211,
+    suffix: '+',
     label: 'Dedicated Employees',
     description: 'A skilled workforce across manufacturing, quality assurance, and R&D.',
   },
   {
     icon: Pill,
-    value: '65+',
+    value: 65,
+    suffix: '+',
     label: 'Registered Formulations',
     description: 'A diverse and growing portfolio across multiple therapeutic categories.',
   },
   {
     icon: FlaskConical,
-    value: '38+',
+    value: 38,
+    suffix: '+',
     label: 'Generic Molecules',
     description: 'High-purity active pharmaceutical ingredients manufactured in-house.',
   },
   {
     icon: Activity,
-    value: '100%',
+    value: 100,
+    suffix: '%',
     label: 'cGMP Compliance',
     description: 'Rigorous batch testing and quality control adhering to WHO standards.',
   },
 ];
+
+// Reusable animated counter component
+function Counter({ value, suffix }: { value: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  useEffect(() => {
+    if (!isInView || !ref.current) return;
+
+    const node = ref.current;
+    const controls = animate(1, value, {
+      duration: 2.2,
+      ease: 'easeOut',
+      onUpdate(latest) {
+        node.textContent = Math.floor(latest).toString() + suffix;
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, value, suffix]);
+
+  return <span ref={ref}>1{suffix}</span>;
+}
 
 export default function Operations() {
   return (
@@ -83,7 +111,7 @@ export default function Operations() {
                       <stat.icon className="h-7 w-7" />
                     </div>
                     <div className="font-display text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-white via-cyan-100 to-cyan-300 bg-clip-text text-transparent">
-                      {stat.value}
+                      <Counter value={stat.value} suffix={stat.suffix} />
                     </div>
                     <h3 className="mt-2 font-semibold text-white text-lg tracking-wide">
                       {stat.label}
