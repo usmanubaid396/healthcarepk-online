@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Products', href: '#products' },
   { label: 'Operations', href: '#operations' },
+  { label: 'Blog', href: '#blog' },
 ] as const;
 
 export const FOOTER_LINKS = [
@@ -12,6 +13,7 @@ export const FOOTER_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Products', href: '#products' },
   { label: 'Operations', href: '#operations' },
+  { label: 'Blog', href: '#blog' },
   { label: 'Privacy Policy', href: '#' },
   { label: 'Terms of Use', href: '#' },
 ] as const;
