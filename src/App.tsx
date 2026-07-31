@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import ProductShowcase from './components/ProductShowcase';
 import About from './components/About';
 import Operations from './components/Operations';
+import Blog from './components/Blog';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <ProductShowcase />
         <About />
         <Operations />
+        <Blog />
       </main>
       <Footer />
     </div>
