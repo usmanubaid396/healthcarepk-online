@@ -49,7 +49,7 @@ function InteractiveBubble({
   };
 
   return (
-    <div className={`absolute ${pos}`} style={{ perspective: '1000px' }}>
+    <div className={`absolute ${pos}`} style={{ perspective: '1200px' }}>
       <motion.div
         onClick={handleScrollToSection}
         role="button"
@@ -58,36 +58,39 @@ function InteractiveBubble({
         initial={{ scale: 0, opacity: 0, rotateX: 0, rotateY: 0, z: 0 }}
         animate={
           reduced
-            ? { scale: 1, opacity: 0.9 }
+            ? { scale: 1, opacity: 0.95 }
             : {
-                scale: [1, 1.05, 1],
-                rotateX: [0, 360],
-                rotateY: [0, 360],
-                z: [0, 40, 0],
-                opacity: 0.9,
+                scale: [1, 1.06, 1],
+                rotateX: [-12, 12, -12],
+                rotateY: [-15, 15, -15],
+                z: [0, 50, 0],
+                opacity: 0.95,
               }
         }
-        whileHover={{ scale: 1.2, z: 90, opacity: 1 }}
+        whileHover={{ scale: 1.18, z: 100, opacity: 1 }}
         whileTap={{ scale: 0.95 }}
         transition={
           reduced
             ? undefined
             : {
-                scale: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay },
-                rotateX: { duration: 20, repeat: Infinity, ease: 'linear', delay },
-                rotateY: { duration: 15, repeat: Infinity, ease: 'linear', delay },
-                z: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+                scale: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay },
+                rotateX: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay },
+                rotateY: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay },
+                z: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay },
               }
         }
         style={{
           willChange: 'transform',
           transformStyle: 'preserve-3d',
-          background: 'radial-gradient(circle at 35% 35%, rgba(103, 232, 249, 0.7) 0%, rgba(6, 182, 212, 0.45) 40%, rgba(13, 148, 136, 0.8) 75%, rgba(2, 6, 23, 0.98) 100%)',
-          boxShadow: 'inset -12px -12px 28px rgba(0, 0, 0, 0.75), inset 6px 6px 18px rgba(255, 255, 255, 0.5), 0 20px 45px rgba(6, 182, 212, 0.4)',
+          background: 'radial-gradient(circle at 30% 30%, rgba(165, 243, 252, 0.9) 0%, rgba(6, 182, 212, 0.65) 35%, rgba(13, 148, 136, 0.85) 70%, rgba(2, 6, 23, 0.98) 100%)',
+          boxShadow: 'inset -14px -14px 32px rgba(0, 0, 0, 0.8), inset 8px 8px 20px rgba(255, 255, 255, 0.6), 0 25px 50px rgba(6, 182, 212, 0.45)',
         }}
-        className={`${size} rounded-full border border-cyan-200/40 cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-100`}
+        className={`${size} rounded-full border border-cyan-200/50 cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-white`}
       >
-        <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-100 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] select-none pointer-events-none transform translate-z-10">
+        {/* Specular lighting highlight for 3D sphere realism */}
+        <div className="absolute top-2 left-3 w-6 h-3 rounded-full bg-white/40 blur-[1px] transform -rotate-45 pointer-events-none" />
+
+        <span className="text-[11px] sm:text-xs font-extrabold tracking-wider text-cyan-50 uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] select-none pointer-events-none transform translate-z-20">
           {label}
         </span>
       </motion.div>
