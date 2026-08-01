@@ -17,8 +17,8 @@ const NAV_BUBBLES: Omit<BubbleNav, 'id'>[] = [
   { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[10%] top-[15%]', delay: 1.2, label: 'About', target: 'about' },
   { size: 'h-24 w-24 sm:h-28 sm:w-28', pos: 'left-[12%] bottom-[22%]', delay: 0.6, label: 'Operations', target: 'operations' },
   { size: 'h-30 w-30 sm:h-36 sm:w-36', pos: 'right-[8%] top-[50%]', delay: 1.8, label: 'Blog', target: 'blog' },
-  { size: 'h-18 w-18 sm:h-22 sm:w-22', pos: 'left-[45%] top-[10%]', delay: 0.9, label: 'Contact', target: 'contact' },
-  { size: 'h-22 w-22 sm:h-26 sm:w-26', pos: 'right-[32%] bottom-[15%]', delay: 2.4, label: 'Home', target: 'home' },
+  { size: 'h-28 w-28 sm:h-34 sm:w-34', pos: 'left-[42%] top-[8%]', delay: 0.9, label: 'Contact', target: 'contact' },
+  { size: 'h-26 w-26 sm:h-32 sm:w-32', pos: 'right-[28%] bottom-[12%]', delay: 2.4, label: 'Home', target: 'home' },
 ];
 
 function InteractiveBubble({
