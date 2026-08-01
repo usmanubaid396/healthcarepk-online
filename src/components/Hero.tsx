@@ -29,18 +29,31 @@ function InteractiveBubble({
   target,
   reduced,
 }: BubbleNav & { reduced: boolean | null }) {
-  const handleScrollToSection = () => {
-    const el = document.getElementById(target) || document.querySelector(`[data-section="${target}"]`);
+  const handleScrollToSection = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Flexible multi-selector lookup to ensure it finds the section
+    const el =
+      document.getElementById(target) ||
+      document.querySelector(`[data-section="${target}"]`) ||
+      document.querySelector(`section#${target}`) ||
+      document.querySelector(`.${target}`);
+
     if (el) {
       const yOffset = -80;
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      console.warn(`Section target "${target}" not found on page.`);
     }
   };
 
   return (
     <motion.div
       onClick={handleScrollToSection}
+      role="button"
+      tabIndex={0}
       aria-label={`Navigate to ${label}`}
       initial={{ scale: 0, opacity: 0 }}
       animate={
@@ -65,9 +78,9 @@ function InteractiveBubble({
             }
       }
       style={{ willChange: 'transform' }}
-      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
+      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto z-40 flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
     >
-      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 group-text uppercase drop-shadow-md select-none">
+      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 group-text uppercase drop-shadow-md select-none pointer-events-none">
         {label}
       </span>
     </motion.div>
@@ -114,7 +127,7 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03] pointer-events-none" />
 
-        <div className="hidden sm:block absolute inset-0 pointer-events-none">
+        <div className="hidden sm:block absolute inset-0 pointer-events-none z-30">
           {bubbles.map((b) => (
             <InteractiveBubble
               key={b.id}
