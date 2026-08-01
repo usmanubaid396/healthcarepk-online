@@ -1,8 +1,16 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow } from './ui/Stage';
 
-const SPHERES = [
+interface SphereItem {
+  id: number;
+  size: string;
+  pos: string;
+  delay: number;
+}
+
+const INITIAL_SPHERES: Omit<SphereItem, 'id'>[] = [
   { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'left-[8%] top-[22%]', delay: 0 },
   { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[12%] top-[15%]', delay: 1.2 },
   { size: 'h-24 w-24 sm:h-30 sm:w-30', pos: 'left-[14%] bottom-[18%]', delay: 0.6 },
@@ -16,31 +24,44 @@ function FloatingSphere({
   pos,
   delay,
   reduced,
+  onPop,
 }: {
   size: string;
   pos: string;
   delay: number;
   reduced: boolean | null;
+  onPop: () => void;
 }) {
   return (
     <motion.div
-      aria-hidden
-      className={`absolute ${pos} rounded-full bg-gradient-to-br from-cyan-400/25 to-teal-500/20 backdrop-blur-3xl border border-cyan-300/30 shadow-[0_20px_50px_rgba(6,182,212,0.25)]`}
-      style={{ willChange: 'transform' }}
+      onClick={onPop}
+      initial={{ scale: 0, opacity: 0 }}
       animate={
         reduced
-          ? undefined
+          ? { scale: 1, opacity: 0.8 }
           : {
               scale: [1, 1.15, 1],
               rotate: [0, 30, 0],
               y: [0, -24, 0],
+              opacity: 0.8,
             }
       }
+      exit={{
+        scale: 1.6,
+        opacity: 0,
+        transition: { duration: 0.15 },
+      }}
       transition={
         reduced
           ? undefined
-          : { duration: 8, repeat: Infinity, ease: 'easeInOut', delay }
+          : {
+              scale: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+              rotate: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+              y: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+            }
       }
+      style={{ willChange: 'transform' }}
+      className={`absolute ${pos} rounded-full bg-gradient-to-br from-cyan-400/25 to-teal-500/20 backdrop-blur-3xl border border-cyan-300/30 shadow-[0_20px_50px_rgba(6,182,212,0.25)] cursor-pointer pointer-events-auto hover:border-cyan-200 hover:bg-cyan-400/35 transition-colors`}
     >
       <div className={`${size} rounded-full opacity-80`} />
     </motion.div>
@@ -49,6 +70,26 @@ function FloatingSphere({
 
 export default function Hero() {
   const reduced = useReducedMotion();
+  const [spheres, setSpheres] = useState<SphereItem[]>(
+    INITIAL_SPHERES.map((s, idx) => ({ ...s, id: idx }))
+  );
+
+  const popSphere = (id: number) => {
+    // Remove the clicked sphere
+    setSpheres((prev) => prev.filter((s) => s.id !== id));
+
+    // Respawn a new sphere after 1.5 seconds
+    setTimeout(() => {
+      const randomBase = INITIAL_SPHERES[Math.floor(Math.random() * INITIAL_SPHERES.length)];
+      setSpheres((prev) => [
+        ...prev,
+        {
+          ...randomBase,
+          id: Date.now() + Math.random(),
+        },
+      ]);
+    }, 1500);
+  };
 
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -70,25 +111,33 @@ export default function Hero() {
     }
   };
 
-  // Expanded viewBox width (1400) and optimized font size to prevent horizontal clipping on edges
   const textMaskSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 360'%3E%3Cstyle%3Etext %7B font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 900; font-size: 118px; text-anchor: middle; dominant-baseline: middle; text-transform: uppercase; %7D%3C/style%3E%3Ctext x='50%25' y='32%25'%3EMAKING THE WORLD%3C/text%3E%3Ctext x='50%25' y='76%25'%3EHEALTHIER%3C/text%3E%3C/svg%3E")`;
 
   return (
     <section id="home" className="relative isolate min-h-[100svh] h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center pt-20 sm:pt-16 pb-6">
       
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      <div aria-hidden className="absolute inset-0 z-0 overflow-hidden">
         <AmbientGlow
           colorClass="bg-teal-500/25"
           positionClass="absolute left-1/2 top-1/3"
           sizeClass="h-[700px] w-[700px] -translate-x-1/2"
           blur="blur-[160px]"
         />
-        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03]" />
+        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03] pointer-events-none" />
 
-        <div className="hidden sm:block absolute inset-0">
-          {SPHERES.map((s, i) => (
-            <FloatingSphere key={i} {...s} reduced={reduced} />
-          ))}
+        <div className="hidden sm:block absolute inset-0 pointer-events-none">
+          <AnimatePresence>
+            {spheres.map((s) => (
+              <FloatingSphere
+                key={s.id}
+                size={s.size}
+                pos={s.pos}
+                delay={s.delay}
+                reduced={reduced}
+                onPop={() => popSphere(s.id)}
+              />
+            ))}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -97,7 +146,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-3.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md mb-3 sm:mb-4"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-3.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md mb-3 sm:mb-4 pointer-events-auto"
         >
           <ShieldCheck className="h-3.5 w-3.5" />
           WHO-GMP · ISO 9001:2015 · cGMP Compliant
@@ -147,7 +196,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mx-auto mt-1 sm:mt-3 max-w-xl text-xs sm:text-sm md:text-base leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20"
+          className="mx-auto mt-1 sm:mt-3 max-w-xl text-xs sm:text-sm md:text-base leading-relaxed text-slate-300 px-4 sm:px-0 relative z-20 pointer-events-auto"
         >
           Healthcare Pharmaceuticals is a WHO-GMP, ISO 9001:2015, and cGMP
           compliant manufacturer of registered medicines — delivering quality,
