@@ -49,40 +49,44 @@ function InteractiveBubble({
   };
 
   return (
-    <motion.div
-      onClick={handleScrollToSection}
-      role="button"
-      tabIndex={0}
-      aria-label={`Navigate to ${label}`}
-      initial={{ scale: 0, opacity: 0, rotate: 0 }}
-      animate={
-        reduced
-          ? { scale: 1, opacity: 0.85 }
-          : {
-              scale: [1, 1.05, 1],
-              rotate: [0, 360],
-              y: [0, -15, 0],
-              opacity: 0.85,
-            }
-      }
-      whileHover={{ scale: 1.15, opacity: 1 }}
-      whileTap={{ scale: 0.9 }}
-      transition={
-        reduced
-          ? undefined
-          : {
-              scale: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay },
-              rotate: { duration: 18, repeat: Infinity, ease: 'linear', delay },
-              y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay },
-            }
-      }
-      style={{ willChange: 'transform' }}
-      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
-    >
-      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 uppercase drop-shadow-md select-none pointer-events-none">
-        {label}
-      </span>
-    </motion.div>
+    <div className="absolute" style={{ perspective: '1000px' }}>
+      <motion.div
+        onClick={handleScrollToSection}
+        role="button"
+        tabIndex={0}
+        aria-label={`Navigate to ${label}`}
+        initial={{ scale: 0, opacity: 0, rotateX: 0, rotateY: 0, z: 0 }}
+        animate={
+          reduced
+            ? { scale: 1, opacity: 0.85 }
+            : {
+                scale: [1, 1.05, 1],
+                rotateX: [0, 360],
+                rotateY: [0, 360],
+                z: [0, 40, 0],
+                opacity: 0.85,
+              }
+        }
+        whileHover={{ scale: 1.2, z: 90, opacity: 1 }}
+        whileTap={{ scale: 0.95 }}
+        transition={
+          reduced
+            ? undefined
+            : {
+                scale: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay },
+                rotateX: { duration: 20, repeat: Infinity, ease: 'linear', delay },
+                rotateY: { duration: 15, repeat: Infinity, ease: 'linear', delay },
+                z: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+              }
+        }
+        style={{ willChange: 'transform', transformStyle: 'preserve-3d' }}
+        className={`${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/35 to-teal-500/20 backdrop-blur-md border border-cyan-300/50 shadow-[0_20px_50px_rgba(6,182,212,0.4)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/45`}
+      >
+        <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] select-none pointer-events-none transform translate-z-10">
+          {label}
+        </span>
+      </motion.div>
+    </div>
   );
 }
 
