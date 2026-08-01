@@ -54,14 +54,14 @@ function InteractiveBubble({
       role="button"
       tabIndex={0}
       aria-label={`Navigate to ${label}`}
-      initial={{ scale: 0, opacity: 0 }}
+      initial={{ scale: 0, opacity: 0, rotate: 0 }}
       animate={
         reduced
           ? { scale: 1, opacity: 0.85 }
           : {
-              scale: [1, 1.1, 1],
-              rotate: [0, 15, 0],
-              y: [0, -20, 0],
+              scale: [1, 1.05, 1],
+              rotate: [0, 360],
+              y: [0, -15, 0],
               opacity: 0.85,
             }
       }
@@ -71,9 +71,9 @@ function InteractiveBubble({
         reduced
           ? undefined
           : {
-              scale: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay },
-              rotate: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay },
-              y: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+              scale: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay },
+              rotate: { duration: 18, repeat: Infinity, ease: 'linear', delay },
+              y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay },
             }
       }
       style={{ willChange: 'transform' }}
@@ -117,7 +117,6 @@ export default function Hero() {
   return (
     <section id="home" className="relative isolate min-h-[100svh] h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center pt-20 sm:pt-16 pb-6">
       
-      {/* Background Visuals Layer (z-0) */}
       <div aria-hidden className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AmbientGlow
           colorClass="bg-teal-500/25"
@@ -128,7 +127,6 @@ export default function Hero() {
         <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03]" />
       </div>
 
-      {/* Interactive Bubbles Navigation Layer (z-20) */}
       <div className="hidden sm:block absolute inset-0 pointer-events-none z-20">
         {bubbles.map((b) => (
           <InteractiveBubble
@@ -139,7 +137,6 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Main Foreground Content Layer (z-10) */}
       <div className="container-tight relative z-10 pt-12 sm:pt-20 pb-4 text-center flex flex-col items-center justify-center h-full">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
