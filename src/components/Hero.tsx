@@ -58,13 +58,13 @@ function InteractiveBubble({
         initial={{ scale: 0, opacity: 0, rotateX: 0, rotateY: 0, z: 0 }}
         animate={
           reduced
-            ? { scale: 1, opacity: 0.85 }
+            ? { scale: 1, opacity: 0.9 }
             : {
                 scale: [1, 1.05, 1],
                 rotateX: [0, 360],
                 rotateY: [0, 360],
                 z: [0, 40, 0],
-                opacity: 0.85,
+                opacity: 0.9,
               }
         }
         whileHover={{ scale: 1.2, z: 90, opacity: 1 }}
@@ -79,10 +79,15 @@ function InteractiveBubble({
                 z: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
               }
         }
-        style={{ willChange: 'transform', transformStyle: 'preserve-3d' }}
-        className={`${size} rounded-full bg-gradient-to-br from-cyan-400/35 to-teal-500/20 backdrop-blur-md border border-cyan-300/50 shadow-[0_20px_50px_rgba(6,182,212,0.4)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/45`}
+        style={{
+          willChange: 'transform',
+          transformStyle: 'preserve-3d',
+          background: 'radial-gradient(circle at 35% 35%, rgba(103, 232, 249, 0.7) 0%, rgba(6, 182, 212, 0.45) 40%, rgba(13, 148, 136, 0.8) 75%, rgba(2, 6, 23, 0.98) 100%)',
+          boxShadow: 'inset -12px -12px 28px rgba(0, 0, 0, 0.75), inset 6px 6px 18px rgba(255, 255, 255, 0.5), 0 20px 45px rgba(6, 182, 212, 0.4)',
+        }}
+        className={`${size} rounded-full border border-cyan-200/40 cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-100`}
       >
-        <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] select-none pointer-events-none transform translate-z-10">
+        <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-100 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] select-none pointer-events-none transform translate-z-10">
           {label}
         </span>
       </motion.div>
