@@ -49,7 +49,7 @@ function InteractiveBubble({
   };
 
   return (
-    <div className="absolute" style={{ perspective: '1000px' }}>
+    <div className={`absolute ${pos}`} style={{ perspective: '1000px' }}>
       <motion.div
         onClick={handleScrollToSection}
         role="button"
@@ -80,7 +80,7 @@ function InteractiveBubble({
               }
         }
         style={{ willChange: 'transform', transformStyle: 'preserve-3d' }}
-        className={`${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/35 to-teal-500/20 backdrop-blur-md border border-cyan-300/50 shadow-[0_20px_50px_rgba(6,182,212,0.4)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/45`}
+        className={`${size} rounded-full bg-gradient-to-br from-cyan-400/35 to-teal-500/20 backdrop-blur-md border border-cyan-300/50 shadow-[0_20px_50px_rgba(6,182,212,0.4)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/45`}
       >
         <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] select-none pointer-events-none transform translate-z-10">
           {label}
