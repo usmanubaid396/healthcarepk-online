@@ -1,95 +1,84 @@
 import { useState } from 'react';
-import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, ArrowRight, FlaskConical } from 'lucide-react';
 import { AmbientGlow } from './ui/Stage';
 
-interface SphereItem {
+interface BubbleNav {
   id: number;
   size: string;
   pos: string;
   delay: number;
+  label: string;
+  target: string;
 }
 
-const INITIAL_SPHERES: Omit<SphereItem, 'id'>[] = [
-  { size: 'h-28 w-28 sm:h-36 sm:w-36', pos: 'left-[8%] top-[22%]', delay: 0 },
-  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[12%] top-[15%]', delay: 1.2 },
-  { size: 'h-24 w-24 sm:h-30 sm:w-30', pos: 'left-[14%] bottom-[18%]', delay: 0.6 },
-  { size: 'h-32 w-32 sm:h-40 sm:w-40', pos: 'right-[8%] top-[48%]', delay: 1.8 },
-  { size: 'h-16 w-16 sm:h-22 sm:w-22', pos: 'left-[45%] top-[12%]', delay: 0.9 },
-  { size: 'h-22 w-22 sm:h-28 sm:w-28', pos: 'right-[35%] bottom-[15%]', delay: 2.4 },
+const NAV_BUBBLES: Omit<BubbleNav, 'id'>[] = [
+  { size: 'h-28 w-28 sm:h-34 sm:w-34', pos: 'left-[6%] top-[20%]', delay: 0, label: 'Products', target: 'products' },
+  { size: 'h-20 w-20 sm:h-24 sm:w-24', pos: 'right-[10%] top-[15%]', delay: 1.2, label: 'About', target: 'about' },
+  { size: 'h-24 w-24 sm:h-28 sm:w-28', pos: 'left-[12%] bottom-[22%]', delay: 0.6, label: 'Operations', target: 'operations' },
+  { size: 'h-30 w-30 sm:h-36 sm:w-36', pos: 'right-[8%] top-[50%]', delay: 1.8, label: 'Blog', target: 'blog' },
+  { size: 'h-18 w-18 sm:h-22 sm:w-22', pos: 'left-[45%] top-[10%]', delay: 0.9, label: 'Contact', target: 'contact' },
+  { size: 'h-22 w-22 sm:h-26 sm:w-26', pos: 'right-[32%] bottom-[15%]', delay: 2.4, label: 'Home', target: 'home' },
 ];
 
-function FloatingSphere({
+function InteractiveBubble({
   size,
   pos,
   delay,
+  label,
+  target,
   reduced,
-  onPop,
-}: {
-  size: string;
-  pos: string;
-  delay: number;
-  reduced: boolean | null;
-  onPop: () => void;
-}) {
+}: BubbleNav & { reduced: boolean | null }) {
+  const handleScrollToSection = () => {
+    const el = document.getElementById(target) || document.querySelector(`[data-section="${target}"]`);
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
     <motion.div
-      onClick={onPop}
+      onClick={handleScrollToSection}
+      aria-label={`Navigate to ${label}`}
       initial={{ scale: 0, opacity: 0 }}
       animate={
         reduced
-          ? { scale: 1, opacity: 0.8 }
+          ? { scale: 1, opacity: 0.85 }
           : {
-              scale: [1, 1.15, 1],
-              rotate: [0, 30, 0],
-              y: [0, -24, 0],
-              opacity: 0.8,
+              scale: [1, 1.1, 1],
+              rotate: [0, 15, 0],
+              y: [0, -20, 0],
+              opacity: 0.85,
             }
       }
-      exit={{
-        scale: 1.6,
-        opacity: 0,
-        transition: { duration: 0.15 },
-      }}
+      whileHover={{ scale: 1.15, opacity: 1 }}
+      whileTap={{ scale: 0.9 }}
       transition={
         reduced
           ? undefined
           : {
-              scale: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
-              rotate: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
+              scale: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay },
+              rotate: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay },
               y: { duration: 8, repeat: Infinity, ease: 'easeInOut', delay },
             }
       }
       style={{ willChange: 'transform' }}
-      className={`absolute ${pos} rounded-full bg-gradient-to-br from-cyan-400/25 to-teal-500/20 backdrop-blur-3xl border border-cyan-300/30 shadow-[0_20px_50px_rgba(6,182,212,0.25)] cursor-pointer pointer-events-auto hover:border-cyan-200 hover:bg-cyan-400/35 transition-colors`}
+      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
     >
-      <div className={`${size} rounded-full opacity-80`} />
+      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 group-text uppercase drop-shadow-md select-none">
+        {label}
+      </span>
     </motion.div>
   );
 }
 
 export default function Hero() {
   const reduced = useReducedMotion();
-  const [spheres, setSpheres] = useState<SphereItem[]>(
-    INITIAL_SPHERES.map((s, idx) => ({ ...s, id: idx }))
+  const [bubbles] = useState<BubbleNav[]>(
+    NAV_BUBBLES.map((b, idx) => ({ ...b, id: idx }))
   );
-
-  const popSphere = (id: number) => {
-    // Remove the clicked sphere
-    setSpheres((prev) => prev.filter((s) => s.id !== id));
-
-    // Respawn a new sphere after 1.5 seconds
-    setTimeout(() => {
-      const randomBase = INITIAL_SPHERES[Math.floor(Math.random() * INITIAL_SPHERES.length)];
-      setSpheres((prev) => [
-        ...prev,
-        {
-          ...randomBase,
-          id: Date.now() + Math.random(),
-        },
-      ]);
-    }, 1500);
-  };
 
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -126,18 +115,13 @@ export default function Hero() {
         <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03] pointer-events-none" />
 
         <div className="hidden sm:block absolute inset-0 pointer-events-none">
-          <AnimatePresence>
-            {spheres.map((s) => (
-              <FloatingSphere
-                key={s.id}
-                size={s.size}
-                pos={s.pos}
-                delay={s.delay}
-                reduced={reduced}
-                onPop={() => popSphere(s.id)}
-              />
-            ))}
-          </AnimatePresence>
+          {bubbles.map((b) => (
+            <InteractiveBubble
+              key={b.id}
+              {...b}
+              reduced={reduced}
+            />
+          ))}
         </div>
       </div>
 
