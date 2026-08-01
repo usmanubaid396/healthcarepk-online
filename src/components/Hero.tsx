@@ -18,7 +18,6 @@ const NAV_BUBBLES: Omit<BubbleNav, 'id'>[] = [
   { size: 'h-24 w-24 sm:h-28 sm:w-28', pos: 'left-[12%] bottom-[22%]', delay: 0.6, label: 'Operations', target: 'operations' },
   { size: 'h-30 w-30 sm:h-36 sm:w-36', pos: 'right-[8%] top-[50%]', delay: 1.8, label: 'Blog', target: 'blog' },
   { size: 'h-28 w-28 sm:h-34 sm:w-34', pos: 'left-[42%] top-[8%]', delay: 0.9, label: 'Contact', target: 'contact' },
-  { size: 'h-26 w-26 sm:h-32 sm:w-32', pos: 'right-[28%] bottom-[12%]', delay: 2.4, label: 'Home', target: 'home' },
 ];
 
 function InteractiveBubble({
@@ -87,7 +86,6 @@ function InteractiveBubble({
         }}
         className={`${size} rounded-full border border-cyan-500/30 cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-400/60`}
       >
-        {/* Professional corporate sheen/reflection */}
         <div className="absolute top-3 left-4 w-5 h-2.5 rounded-full bg-white/25 blur-[0.5px] transform -rotate-45 pointer-events-none" />
 
         <span className="text-[11px] sm:text-xs font-semibold tracking-wider text-slate-100 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] select-none pointer-events-none transform translate-z-20">
