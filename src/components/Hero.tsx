@@ -33,7 +33,6 @@ function InteractiveBubble({
     e.preventDefault();
     e.stopPropagation();
 
-    // Flexible multi-selector lookup to ensure it finds the section
     const el =
       document.getElementById(target) ||
       document.querySelector(`[data-section="${target}"]`) ||
@@ -78,9 +77,9 @@ function InteractiveBubble({
             }
       }
       style={{ willChange: 'transform' }}
-      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto z-40 flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
+      className={`absolute ${pos} ${size} rounded-full bg-gradient-to-br from-cyan-400/30 to-teal-500/20 backdrop-blur-md border border-cyan-300/40 shadow-[0_15px_35px_rgba(6,182,212,0.3)] cursor-pointer pointer-events-auto flex items-center justify-center text-center p-2 group transition-colors hover:border-cyan-200 hover:bg-cyan-400/40`}
     >
-      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 group-text uppercase drop-shadow-md select-none pointer-events-none">
+      <span className="text-[11px] sm:text-xs font-bold tracking-wider text-cyan-200 uppercase drop-shadow-md select-none pointer-events-none">
         {label}
       </span>
     </motion.div>
@@ -118,26 +117,29 @@ export default function Hero() {
   return (
     <section id="home" className="relative isolate min-h-[100svh] h-[100svh] overflow-hidden bg-slate-950 flex items-center justify-center pt-20 sm:pt-16 pb-6">
       
-      <div aria-hidden className="absolute inset-0 z-0 overflow-hidden">
+      {/* Background Visuals Layer (z-0) */}
+      <div aria-hidden className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <AmbientGlow
           colorClass="bg-teal-500/25"
           positionClass="absolute left-1/2 top-1/3"
           sizeClass="h-[700px] w-[700px] -translate-x-1/2"
           blur="blur-[160px]"
         />
-        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03] pointer-events-none" />
-
-        <div className="hidden sm:block absolute inset-0 pointer-events-none z-30">
-          {bubbles.map((b) => (
-            <InteractiveBubble
-              key={b.id}
-              {...b}
-              reduced={reduced}
-            />
-          ))}
-        </div>
+        <div className="absolute inset-0 bg-grid-faint bg-grid opacity-[0.03]" />
       </div>
 
+      {/* Interactive Bubbles Navigation Layer (z-20) */}
+      <div className="hidden sm:block absolute inset-0 pointer-events-none z-20">
+        {bubbles.map((b) => (
+          <InteractiveBubble
+            key={b.id}
+            {...b}
+            reduced={reduced}
+          />
+        ))}
+      </div>
+
+      {/* Main Foreground Content Layer (z-10) */}
       <div className="container-tight relative z-10 pt-12 sm:pt-20 pb-4 text-center flex flex-col items-center justify-center h-full">
         <motion.span
           initial={{ opacity: 0, y: -20 }}
