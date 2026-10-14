@@ -80,25 +80,11 @@ export default function Contact() {
               </p>
             </div>
             <div className="space-y-4 text-sm">
-              <a href={`mailto:${COMPANY.emails.sales}`} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
+              <a href={`mailto:${COMPANY.emails.contact}`} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
                 <span>
-                  <span className="block text-xs uppercase tracking-wider text-cyan-300">Sales & B2B</span>
-                  {COMPANY.emails.sales}
-                </span>
-              </a>
-              <a href={`mailto:${COMPANY.emails.info}`} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                <span>
-                  <span className="block text-xs uppercase tracking-wider text-cyan-300">General Info</span>
-                  {COMPANY.emails.info}
-                </span>
-              </a>
-              <a href={`mailto:${COMPANY.emails.export}`} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                <span>
-                  <span className="block text-xs uppercase tracking-wider text-cyan-300">Export Operations</span>
-                  {COMPANY.emails.export}
+                  <span className="block text-xs uppercase tracking-wider text-cyan-300">Email</span>
+                  {COMPANY.emails.contact}
                 </span>
               </a>
               <a href={COMPANY.phoneHref} className="flex items-start gap-3 text-slate-200 transition-colors hover:text-cyan-300">
