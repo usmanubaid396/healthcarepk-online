@@ -59,7 +59,7 @@ const BLOG_POSTS: BlogPost[] = [
           </p>
           <div className="mt-4">
             <a
-              href="mailto:info@healthcarepk.online"
+              href="mailto:usman@diffmdcat.com"
               className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 font-semibold text-sm"
             >
               <Mail className="h-4 w-4" /> Get in touch with our team
@@ -106,7 +106,7 @@ const BLOG_POSTS: BlogPost[] = [
           </p>
           <div className="mt-4">
             <a
-              href="mailto:sales@healthcarepk.online"
+              href="mailto:usman@diffmdcat.com"
               className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 font-semibold text-sm"
             >
               <Mail className="h-4 w-4" /> Reach out to our sales team
@@ -151,7 +151,7 @@ const BLOG_POSTS: BlogPost[] = [
           </p>
           <div className="mt-4">
             <a
-              href="mailto:sales@healthcarepk.online"
+              href="mailto:usman@diffmdcat.com"
               className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 font-semibold text-sm"
             >
               <Mail className="h-4 w-4" /> Reach out to our sales team

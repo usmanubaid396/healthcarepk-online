@@ -89,8 +89,6 @@ export const COMPANY = {
   phone: '+92 304 1381382',
   phoneHref: 'tel:+923041381382',
   emails: {
-    sales: 'sales@healthcarepk.online',
-    info: 'info@healthcarepk.online',
-    export: 'export@healthcarepk.online',
+    contact: 'usman@diffmdcat.com',
   },
 };
